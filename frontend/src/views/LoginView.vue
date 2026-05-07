@@ -1,54 +1,77 @@
 <template>
   <div class="login-container">
     <el-card class="login-card">
-      <template #header>
-        <div class="login-header">
-          <h2>nuosu-civil-aid</h2>
-          <p>ꆈꌠꏓꂱꈄꏍꇈꑌꄜꄉꐥ</p>
-        </div>
-      </template>
-      <el-form :model="loginForm" label-position="top">
-        <el-form-item label="用户名 / ꑱꆹꑼꂠ">
-          <el-input v-model="loginForm.username" placeholder="请输入用户名" />
+      <h2>nuosu-civil-aid</h2>
+      <el-form :model="form" ref="loginFormRef">
+        <el-form-item>
+          <el-input v-model="form.username" placeholder="用户名 / ꑱꆹꑼꂠ" />
         </el-form-item>
-        <el-form-item label="密码 / ꇬꑼ">
-          <el-input v-model="loginForm.password" type="password" show-password />
+        <el-form-item>
+          <el-input v-model="form.password" type="password" placeholder="密码 / ꇬꑼ" />
         </el-form-item>
-        <el-button type="primary" class="login-btn" @click="handleLogin">登录 / ꇩꄜ</el-button>
+        
+        <!-- 验证码区域 -->
+        <el-form-item>
+          <div class="captcha-box">
+            <el-input v-model="form.captchaCode" placeholder="验证码" style="width: 200px" />
+            <img :src="captchaUrl" @click="refreshCaptcha" class="captcha-img" alt="验证码" />
+          </div>
+        </el-form-item>
+
+        <el-button type="primary" @click="handleLogin" :loading="loading" style="width:100%">
+          登录 / ꇩꄜ
+        </el-button>
       </el-form>
     </el-card>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
+import axios from 'axios' // 这里直接用 axios 请求验证码 Base64
 
+const userStore = useUserStore()
 const router = useRouter()
-const loginForm = reactive({ username: '', password: '' })
+const loading = ref(false)
+const captchaUrl = ref('')
 
-const handleLogin = () => {
-  // 这里暂时做简单的跳转逻辑
-  router.push('/home')
-}
-</script>
+const form = ref({
+  username: '',
+  password: '',
+  captchaCode: '',
+  captchaKey: '' // 对应后端 CaptchaVO 的 key
+})
 
-<style scoped lang="scss">
-.login-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #1d2b64 0%, #f8f9fa 100%);
-  
-  .login-card {
-    width: 400px;
-    .login-header {
-      text-align: center;
-      h2 { margin: 0; color: #409eff; }
-      p { color: #909399; font-size: 0.9rem; margin-top: 5px; }
-    }
-    .login-btn { width: 100%; margin-top: 20px; }
+// 刷新验证码
+const refreshCaptcha = async () => {
+  // 对接后端 CaptchaController /captcha/generate
+  const res = await axios.get('http://localhost:8080/captcha/generate')
+  if (res.data.code === 200) {
+    captchaUrl.value = res.data.data.image // Base64字符串
+    form.value.captchaKey = res.data.data.key
   }
 }
+
+const handleLogin = async () => {
+  loading.value = true
+  try {
+    await userStore.login(form.value)
+    await userStore.getInfo() // 获取用户信息（角色、权限）
+    router.push('/')
+  } catch (err) {
+    refreshCaptcha() // 登录失败刷新验证码
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(refreshCaptcha)
+</script>
+
+<style scoped>
+.captcha-box { display: flex; gap: 10px; align-items: center; }
+.captcha-img { height: 40px; cursor: pointer; border-radius: 4px; }
+/* 其余样式同前 ... */
 </style>
