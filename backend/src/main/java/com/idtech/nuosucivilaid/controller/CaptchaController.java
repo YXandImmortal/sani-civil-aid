@@ -3,9 +3,11 @@ package com.idtech.nuosucivilaid.controller;
 import com.idtech.nuosucivilaid.service.CaptchaService;
 import com.idtech.nuosucivilaid.vo.CaptchaVO;
 import com.idtech.nuosucivilaid.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/captcha")
 public class CaptchaController {
@@ -20,7 +22,9 @@ public class CaptchaController {
      */
     @GetMapping("/generate")
     public Result<CaptchaVO> generateCaptcha() {
+        log.debug("生成图形验证码请求");
         CaptchaVO captchaVO = captchaService.generateCaptcha();
+        log.debug("生成图形验证码成功，captchaId: {}", captchaVO.getCaptchaId());
         return Result.success(captchaVO);
     }
 
@@ -33,7 +37,9 @@ public class CaptchaController {
      */
     @PostMapping("/verify")
     public Result<Boolean> verifyCaptcha(@RequestParam String captchaId, @RequestParam String userInput) {
+        log.debug("验证码校验请求，captchaId: {}", captchaId);
         boolean valid = captchaService.verifyCaptcha(captchaId, userInput);
+        log.debug("验证码校验结果，captchaId: {}, 结果: {}", captchaId, valid);
         return Result.success(valid);
     }
 }

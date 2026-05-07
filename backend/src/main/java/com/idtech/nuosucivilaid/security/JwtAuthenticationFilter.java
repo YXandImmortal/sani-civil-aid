@@ -1,6 +1,7 @@
 package com.idtech.nuosucivilaid.security;
 
 import com.idtech.nuosucivilaid.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 
+@Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -36,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
                 String username = jwtUtil.extractUsername(token);
                 String roleName = jwtUtil.extractRoleName(token);
+                log.debug("JWT 认证成功，用户名: {}, 角色: {}, URI: {}", username, roleName, request.getRequestURI());
 
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + roleName);
 
@@ -51,6 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                log.warn("JWT 认证失败，Token 无效或已过期，URI: {}", request.getRequestURI());
             }
         }
 

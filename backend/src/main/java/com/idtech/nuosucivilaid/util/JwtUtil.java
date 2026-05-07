@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 public final class JwtUtil {
 
@@ -45,13 +47,16 @@ public final class JwtUtil {
         Long expireTime = rememberMe ? rememberMeExpiration : expiration;
         Date expiryDate = new Date(now.getTime() + expireTime);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .claims(claims)
                 .subject(username)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey())
                 .compact();
+
+        log.debug("生成 JWT Token，用户名: {}, 过期时间: {}", username, expiryDate);
+        return token;
     }
 
     private Claims extractAllClaims(String token) {
@@ -84,8 +89,13 @@ public final class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            return !isTokenExpired(token);
+            boolean valid = !isTokenExpired(token);
+            if (!valid) {
+                log.warn("JWT Token 已过期");
+            }
+            return valid;
         } catch (Exception e) {
+            log.warn("JWT Token 验证失败: {}", e.getMessage());
             return false;
         }
     }
