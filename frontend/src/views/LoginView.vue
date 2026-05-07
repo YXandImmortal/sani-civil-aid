@@ -49,8 +49,9 @@ const refreshCaptcha = async () => {
   // 对接后端 CaptchaController /captcha/generate
   const res = await axios.get('http://localhost:8080/captcha/generate')
   if (res.data.code === 200) {
-    captchaUrl.value = res.data.data.image // Base64字符串
-    form.value.captchaKey = res.data.data.key
+    captchaUrl.value = res.data.data.imageBase64 // Base64字符串
+    console.log(res.data.data)
+    form.value.captchaKey = res.data.data.captchaId
   }
 }
 
