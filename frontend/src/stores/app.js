@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
-  // language: 'zh' 为汉文, 'nuosu' 为彝文
-  const lang = ref('zh')
+  // lang: 'zh' 代表中文, 'nuosu' 代表彝文
+  const lang = ref(localStorage.getItem('lang') || 'zh')
   
   const toggleLang = () => {
     lang.value = lang.value === 'zh' ? 'nuosu' : 'zh'
+    localStorage.setItem('lang', lang.value)
   }
 
   return { lang, toggleLang }

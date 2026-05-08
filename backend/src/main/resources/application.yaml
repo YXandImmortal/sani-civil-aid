@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/nuosu_civil_aid_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:yx011215}
+    password: ${DB_PASSWORD:123456}
   jpa:
     hibernate:
       ddl-auto: none
