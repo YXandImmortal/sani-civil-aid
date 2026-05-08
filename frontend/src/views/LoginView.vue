@@ -19,23 +19,23 @@
           <div class="captcha-container">
             <el-input v-model="loginForm.captcha" placeholder="输入验证码" style="flex: 1" />
             <div class="captcha-img-box">
-              <img 
-                v-if="captchaImg" 
-                :src="captchaImg" 
-                @click="getCaptcha" 
-                class="captcha-img" 
-                title="点击刷新"
+              <img
+                  v-if="captchaImg"
+                  :src="captchaImg"
+                  @click="getCaptcha"
+                  class="captcha-img"
+                  title="点击刷新"
               />
               <el-button v-else :loading="true" text>加载中</el-button>
             </div>
           </div>
         </el-form-item>
 
-        <el-button 
-          type="primary" 
-          :loading="loading" 
-          @click="handleLogin" 
-          style="width: 100%; margin-top: 10px"
+        <el-button
+            type="primary"
+            :loading="loading"
+            @click="handleLogin"
+            style="width: 100%; margin-top: 10px"
         >
           进入系统 / ꇩꄜ
         </el-button>
@@ -71,7 +71,7 @@ const getCaptcha = async () => {
     // 此时 request 已经配置了 baseURL: '/api'
     const data = await request.get('/captcha/generate')
     console.log('验证码数据获取成功:', data)
-    
+
     // 对应后端字段：imageBase64 和 captchaId
     captchaImg.value = data.imageBase64
     loginForm.captchaId = data.captchaId
@@ -94,7 +94,7 @@ const handleLogin = async () => {
     // 调用 store 中的登录 actions
     await userStore.login(loginForm)
     ElMessage.success('登录成功')
-    
+
     // 登录成功后跳转到首页
     router.push('/')
   } catch (err) {
