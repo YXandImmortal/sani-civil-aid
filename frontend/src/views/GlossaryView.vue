@@ -1,11 +1,11 @@
 <template>
   <div class="glossary-container">
     <div class="page-header">
-      <h2 class="nuosu-font">{{ appStore.lang === 'zh' ? '法律术语词典' : 'ꄜꀋꇬꏠꇈꑌ' }}</h2>
+      <h2 class="main-title">{{ appStore.lang === 'zh' ? '法律术语词典' : 'ꄜꀋꇬꏠꇈꑌ' }}</h2>
       <el-input
         v-model="searchKeyword"
         :placeholder="appStore.lang === 'zh' ? '搜索术语...' : 'ꇬꏠꇈꑌ...'"
-        style="width: 300px"
+        class="custom-search"
         clearable
         @input="fetchTerms"
       >
@@ -13,26 +13,30 @@
       </el-input>
     </div>
 
-    <el-table :data="termList" v-loading="loading" style="width: 100%; border-radius: 8px">
-      <el-table-column :label="appStore.lang === 'zh' ? '汉文术语' : 'ꇩꉙꇬꏠ'" width="180">
-        <template #default="scope">
-          <b style="color: #409eff">{{ scope.row.termCn }}</b>
-        </template>
-      </el-table-column>
-      <el-table-column :label="appStore.lang === 'zh' ? '彝文术语' : 'ꆈꌠꉙꇬꏠ'" width="200">
-        <template #default="scope">
-          <span class="nuosu-text">{{ scope.row.termNuosu }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :label="appStore.lang === 'zh' ? '术语解释' : 'ꇬꏠꄜꅉ'">
-        <template #default="scope">
-          <div class="definition-box">
-            <p class="cn-def">{{ scope.row.definitionCn }}</p>
-            <p class="nuosu-def">{{ scope.row.definitionNuosu }}</p>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="table-wrapper">
+      <el-table :data="termList" v-loading="loading" class="custom-table">
+        <el-table-column :label="appStore.lang === 'zh' ? '汉文术语' : 'ꇩꉙꇬꏠ'" width="180">
+          <template #default="scope">
+            <span class="term-name-cn">{{ scope.row.termCn }}</span>
+          </template>
+        </el-table-column>
+        
+        <el-table-column :label="appStore.lang === 'zh' ? '彝文术语' : 'ꆈꌠꉙꇬꏠ'" width="200">
+          <template #default="scope">
+            <span class="nuosu-font term-name-nuosu">{{ scope.row.termNuosu }}</span>
+          </template>
+        </el-table-column>
+        
+        <el-table-column :label="appStore.lang === 'zh' ? '术语解释' : 'ꇬꏠꄜꅉ'">
+          <template #default="scope">
+            <div class="definition-box">
+              <p class="cn-def">{{ scope.row.definitionCn }}</p>
+              <p class="nuosu-font nuosu-def">{{ scope.row.definitionNuosu }}</p>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -64,18 +68,55 @@ onMounted(fetchTerms)
 
 <style scoped lang="scss">
 .glossary-container {
-  padding: 20px;
+  padding: 10px;
+  color: var(--color-text-primary);
+
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    h2 { margin: 0; color: #303133; }
+    margin-bottom: 24px;
+    .main-title { color: var(--color-text-primary); margin: 0; }
   }
-  .nuosu-text { font-size: 1.2rem; color: #606266; }
-  .definition-box {
-    .cn-def { color: #303133; margin-bottom: 8px; line-height: 1.6; }
-    .nuosu-def { color: #909399; font-size: 1.1rem; line-height: 1.8; }
+
+  // 搜索框去蓝
+  .custom-search {
+    width: 320px;
+    :deep(.el-input__wrapper) {
+      background-color: var(--color-bg-elevated);
+      box-shadow: 0 0 0 1px var(--color-border-default) inset;
+      &.is-focus { box-shadow: 0 0 0 1px var(--color-primary) inset !important; }
+    }
+    :deep(.el-input__icon) { color: var(--color-secondary); }
+  }
+
+  // 表格深度定制
+  .table-wrapper {
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-default);
+    overflow: hidden;
+  }
+
+  :deep(.custom-table) {
+    --el-table-border-color: var(--color-border-subtle);
+    --el-table-header-bg-color: var(--color-bg-inset);
+    --el-table-row-hover-bg-color: var(--color-primary-light);
+    background-color: transparent;
+
+    th.el-table__cell {
+      color: var(--color-text-secondary);
+      font-weight: bold;
+      border-bottom: 2px solid var(--color-border-default);
+    }
+
+    .term-name-cn { color: var(--color-primary); font-weight: 600; }
+    .term-name-nuosu { color: var(--color-secondary); font-size: 1.2rem; }
+
+    .definition-box {
+      .cn-def { color: var(--color-text-primary); margin: 0 0 8px; line-height: 1.6; }
+      .nuosu-def { color: var(--color-text-secondary); font-size: 1.15rem; line-height: 1.8; margin: 0; }
+    }
   }
 }
 </style>

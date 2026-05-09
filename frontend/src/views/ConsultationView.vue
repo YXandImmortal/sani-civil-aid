@@ -1,8 +1,9 @@
 <template>
   <div class="consultation-container">
     <div class="page-header">
-      <h2 class="nuosu-font">{{ appStore.lang === 'zh' ? '法律咨询' : 'ꊇꇅꇉꄧ' }}</h2>
-      <el-button type="primary" @click="dialogVisible = true">
+      <h2 class="main-title">{{ appStore.lang === 'zh' ? '法律咨询' : 'ꊇꇅꇉꄧ' }}</h2>
+      <el-button type="primary" class="ask-btn" @click="dialogVisible = true">
+        <el-icon style="margin-right: 5px"><ChatDotRound /></el-icon>
         {{ appStore.lang === 'zh' ? '我要提问' : 'ꄜꀋꄧꄉ' }}
       </el-button>
     </div>
@@ -14,66 +15,55 @@
       <el-card v-for="item in historyList" :key="item.id" class="history-card" shadow="hover">
         <template #header>
           <div class="card-header">
-            <el-tag :type="item.status === 1 ? 'success' : 'warning'" effect="dark">
+            <el-tag :class="item.status === 1 ? 'status-tag-done' : 'status-tag-pending'">
               {{ item.status === 1 ? (appStore.lang === 'zh' ? '已回答' : 'ꇅꇈꀐ') : (appStore.lang === 'zh' ? '待回答' : 'ꇬꄜꀐ') }}
             </el-tag>
-            <span class="time">{{ formatDate(item.createTime) }}</span>
+            <span class="time-text">{{ formatDate(item.createTime) }}</span>
           </div>
         </template>
         
-        <!-- 问题区 -->
-        <div class="chat-item question">
-          <div class="symbol q-symbol">Q</div>
-          <div class="content">
-            <p class="cn">{{ item.questionCn }}</p>
-            <p class="nuosu">{{ item.questionNuosu }}</p>
+        <!-- 问题 -->
+        <div class="chat-row question-row">
+          <div class="avatar q-avatar">Q</div>
+          <div class="content-body">
+            <p class="text-cn">{{ item.questionCn }}</p>
+            <p class="nuosu-font text-nuosu">{{ item.questionNuosu }}</p>
           </div>
         </div>
 
-        <!-- 回答区 (修正后的布局) -->
-        <div v-if="item.status === 1" class="answer-wrapper">
-          <el-divider border-style="dashed" />
-          <div class="chat-item answer">
-            <div class="symbol a-symbol">A</div>
-            <div class="content">
-              <p class="cn">{{ item.answerCn }}</p>
-              <p class="nuosu">{{ item.answerNuosu }}</p>
+        <!-- 回答 -->
+        <div v-if="item.status === 1" class="answer-area">
+          <el-divider class="custom-divider" />
+          <div class="chat-row answer-row">
+            <div class="avatar a-avatar">A</div>
+            <div class="content-body">
+              <p class="text-cn">{{ item.answerCn }}</p>
+              <p class="nuosu-font text-nuosu">{{ item.answerNuosu }}</p>
             </div>
           </div>
         </div>
       </el-card>
     </div>
 
-    <!-- 提问对话框 -->
+    <!-- 提问弹窗 -->
     <el-dialog
       v-model="dialogVisible"
-      :title="appStore.lang === 'zh' ? '提交咨询' : 'ꊇꇅꇉꄧꄧꄉ'"
+      :title="appStore.lang === 'zh' ? '提交新咨询' : 'ꊇꇅꇉꄧꄧꄉ'"
       width="550px"
-      destroy-on-close
+      class="custom-dialog"
     >
       <el-form :model="form" label-position="top">
-        <el-form-item :label="appStore.lang === 'zh' ? '汉文描述' : 'ꇩꉙꊇꇅ'">
-          <el-input 
-            v-model="form.questionCn" 
-            type="textarea" 
-            :rows="4" 
-            placeholder="请详细描述您的问题..." 
-          />
+        <el-form-item :label="appStore.lang === 'zh' ? '汉文问题描述' : 'ꇩꉙꊇꇅ'">
+          <el-input v-model="form.questionCn" type="textarea" :rows="4" class="custom-input" />
         </el-form-item>
-        <el-form-item :label="appStore.lang === 'zh' ? '彝文描述' : 'ꆈꌠꉙꊇꇅ'">
-          <el-input 
-            v-model="form.questionNuosu" 
-            type="textarea" 
-            :rows="4" 
-            placeholder="请使用规范彝文输入..." 
-            class="nuosu-textarea"
-          />
+        <el-form-item :label="appStore.lang === 'zh' ? '彝文问题描述' : 'ꆈꌠꉙꊇꇅ'">
+          <el-input v-model="form.questionNuosu" type="textarea" :rows="4" class="custom-input nuosu-font" />
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible = false">{{ appStore.lang === 'zh' ? '取消' : 'ꀋꄜ' }}</el-button>
-        <el-button type="primary" @click="handleSubmit" :loading="submitting">
-          {{ appStore.lang === 'zh' ? '提交' : 'ꄧꄉ' }}
+        <el-button @click="dialogVisible = false" class="cancel-btn">{{ appStore.lang === 'zh' ? '取消' : 'ꀋꄜ' }}</el-button>
+        <el-button type="primary" @click="handleSubmit" :loading="submitting" class="submit-btn">
+          {{ appStore.lang === 'zh' ? '提交咨询' : 'ꄧꄉ' }}
         </el-button>
       </template>
     </el-dialog>
@@ -85,59 +75,42 @@ import { ref, onMounted, reactive } from 'vue'
 import { useAppStore } from '@/stores/app'
 import request from '@/utils/request'
 import { ElMessage } from 'element-plus'
+import { ChatDotRound } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const loading = ref(false)
 const submitting = ref(false)
 const dialogVisible = ref(false)
 const historyList = ref([])
-
-const form = reactive({
-  questionCn: '',
-  questionNuosu: ''
-})
+const form = reactive({ questionCn: '', questionNuosu: '' })
 
 const fetchHistory = async () => {
   loading.value = true
   try {
     const data = await request.get('/civil/consultation/my-list')
     historyList.value = data
-  } catch (err) {
-    console.error('获取历史失败', err)
-  } finally {
-    loading.value = false
-  }
+  } finally { loading.value = false }
 }
 
 const handleSubmit = async () => {
-  if (!form.questionCn && !form.questionNuosu) {
-    ElMessage.warning('请至少填写一种语言的问题')
-    return
-  }
+  if (!form.questionCn && !form.questionNuosu) return ElMessage.warning('请填写内容')
   submitting.value = true
   try {
     await request.post('/civil/consultation/submit', form)
     ElMessage.success('咨询已提交')
     dialogVisible.value = false
-    form.questionCn = ''
-    form.questionNuosu = ''
+    form.questionCn = ''; form.questionNuosu = '';
     fetchHistory()
-  } finally {
-    submitting.value = false
-  }
+  } finally { submitting.value = false }
 }
 
-const formatDate = (dateStr) => {
-  if (!dateStr) return ''
-  return new Date(dateStr).toLocaleString()
-}
-
+const formatDate = (dateStr) => dateStr ? new Date(dateStr).toLocaleString() : ''
 onMounted(fetchHistory)
 </script>
 
 <style scoped lang="scss">
 .consultation-container {
-  padding: 20px;
+  padding: 10px;
   max-width: 1000px;
   margin: 0 auto;
 
@@ -145,68 +118,60 @@ onMounted(fetchHistory)
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    h2 { font-size: 1.8rem; color: #303133; }
+    margin-bottom: 24px;
+    .main-title { color: var(--color-text-primary); }
+    .ask-btn { background-color: var(--color-primary); border: none; &:hover { background-color: var(--color-primary-hover); } }
   }
 
   .history-card {
-    margin-bottom: 25px;
-    border-radius: 10px;
-    
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
+    margin-bottom: 20px;
+    border-radius: var(--radius-md);
+
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .time { color: #909399; font-size: 0.85rem; }
+      display: flex; justify-content: space-between; align-items: center;
+      .time-text { color: var(--color-text-tertiary); font-size: 0.85rem; }
     }
 
-    .chat-item {
-      display: flex;
-      gap: 20px;
-      margin: 15px 0;
+    .status-tag-done { background-color: var(--color-success); color: white; border: none; }
+    .status-tag-pending { background-color: var(--color-secondary); color: white; border: none; }
 
-      .symbol {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: white;
-        flex-shrink: 0; // 防止符号被挤压
+    .chat-row {
+      display: flex; gap: 16px; margin: 12px 0;
+      .avatar {
+        width: 32px; height: 32px; border-radius: 50%; display: flex;
+        align-items: center; justify-content: center; font-weight: bold; color: white; flex-shrink: 0;
       }
+      .q-avatar { background-color: var(--color-primary); }
+      .a-avatar { background-color: var(--color-secondary); }
       
-      .q-symbol { background-color: #409eff; }
-      .a-symbol { background-color: #67c23a; }
-
-      .content {
+      .content-body {
         flex: 1;
-        .cn { 
-          font-size: 1.05rem; 
-          color: #303133; 
-          margin-bottom: 8px; 
-          line-height: 1.6;
-        }
-        .nuosu { 
-          font-size: 1.25rem; 
-          color: #606266; 
-          line-height: 1.8;
-          font-family: "Microsoft Yi Baiti", serif;
-        }
+        .text-cn { color: var(--color-text-primary); line-height: 1.6; margin: 0 0 6px; }
+        .text-nuosu { color: var(--color-text-secondary); line-height: 1.8; font-size: 1.2rem; margin: 0; }
       }
     }
 
-    .answer-wrapper {
-      .el-divider { margin: 20px 0; }
+    .custom-divider { border-top-color: var(--color-border-subtle); margin: 20px 0; }
+  }
+
+  // 弹窗与输入框深度定制
+  :deep(.custom-dialog) {
+    background-color: var(--color-bg-elevated);
+    .el-dialog__title { color: var(--color-primary); font-weight: bold; }
+    
+    .el-form-item__label { color: var(--color-text-secondary); font-weight: 500; }
+    
+    .custom-input .el-textarea__inner {
+      background-color: var(--color-bg-inset);
+      border: 1px solid var(--color-border-default);
+      color: var(--color-text-primary);
+      &:focus { border-color: var(--color-primary); }
     }
   }
-}
 
-// 针对弹窗中输入框的样式优化
-:deep(.nuosu-textarea .el-textarea__inner) {
-  font-family: "Microsoft Yi Baiti", serif;
-  font-size: 1.2rem;
-  line-height: 1.6;
+  .cancel-btn { border-color: var(--color-border-default); color: var(--color-text-secondary); }
+  .submit-btn { background-color: var(--color-primary); border: none; &:hover { background-color: var(--color-primary-hover); } }
 }
 </style>
