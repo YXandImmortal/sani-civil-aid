@@ -22,3 +22,7 @@ jwt:
   secret: ${JWT_SECRET:nuosu-civil-aid-default-2026-secret-pass-key}
   expiration: ${JWT_EXPIRATION:86400000}
   remember-me-expiration: ${JWT_REMEMBER_ME_EXPIRATION:2592000000}
+
+deepseek:
+    api-key: sk-5f85e6bf6b794efda159511fd7417f4f
+    api-url: https://api.deepseek.com/chat/completions
