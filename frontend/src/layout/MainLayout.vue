@@ -17,17 +17,24 @@
             <span class="yi-placeholder">[彝文占位符]</span>
           </span>
         </el-menu-item>
-        <el-menu-item index="/glossary">
+        <el-menu-item index="/vocabulary">
           <el-icon><Reading /></el-icon>
           <span class="yi-bilingual">
-            <span>法律术语</span>
+            <span>词汇对照</span>
             <span class="yi-placeholder">[彝文占位符]</span>
           </span>
         </el-menu-item>
         <el-menu-item index="/consultation">
-          <el-icon><House /></el-icon>
+          <el-icon><Search /></el-icon>
           <span class="yi-bilingual">
             <span>法条查询</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-menu-item>
+        <el-menu-item index="/font">
+          <el-icon><Document /></el-icon>
+          <span class="yi-bilingual">
+            <span>字体管理</span>
             <span class="yi-placeholder">[彝文占位符]</span>
           </span>
         </el-menu-item>
@@ -99,7 +106,7 @@ import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAppStore } from '@/stores/app'
 import { useRouter, useRoute } from 'vue-router'
-import { House, Reading, ArrowDown, ChatDotRound, Sunny, Moon } from '@element-plus/icons-vue'
+import {House, Reading, ArrowDown, ChatDotRound, Sunny, Moon, Search, Document} from '@element-plus/icons-vue'
 
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -110,8 +117,9 @@ const activeMenu = computed(() => route.path)
 const breadcrumbName = computed(() => {
   const titles = {
     '/home': '法律咨询',
-    '/glossary': '法律术语',
-    '/consultation': '法条查询'
+    '/vocabulary': '词汇对照',
+    '/consultation': '法条查询',
+    '/font': '字体管理'
   }
   return titles[route.path] || ''
 })

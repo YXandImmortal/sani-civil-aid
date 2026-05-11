@@ -27,12 +27,6 @@ public class LegalTerm {
     @Column(name = "term_nuosu", nullable = false)
     private String termNuosu;
 
-    @Column(name = "definition_cn", columnDefinition = "TEXT")
-    private String definitionCn;
-
-    @Column(name = "definition_nuosu", columnDefinition = "TEXT")
-    private String definitionNuosu;
-
     @Column(name = "create_time")
     private Instant createTime;
 

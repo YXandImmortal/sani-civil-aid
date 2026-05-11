@@ -1,8 +1,5 @@
 <template>
   <div class="login-wrapper">
-    <div class="login-decoration left">[彝文占位符]</div>
-    <div class="login-decoration right">[彝文占位符]</div>
-    
     <el-card class="login-card">
       <div class="login-title">
         <h2 class="fire-text">

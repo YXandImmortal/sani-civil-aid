@@ -1,15 +1,15 @@
 <template>
-  <div class="glossary-container">
+  <div class="vocabulary-container">
     <div class="page-header">
       <h2 class="main-title">
         <span class="yi-bilingual">
-          <span>法律术语词典</span>
+          <span>民法典常用词汇对照表</span>
           <span class="yi-placeholder">[彝文占位符]</span>
         </span>
       </h2>
       <el-input
         v-model="searchKeyword"
-        placeholder="搜索术语..."
+        placeholder="搜索词汇..."
         class="custom-search"
         clearable
         @input="fetchTerms"
@@ -19,11 +19,16 @@
     </div>
 
     <div class="table-wrapper">
-      <el-table :data="termList" v-loading="loading" class="custom-table">
+      <el-table
+          :data="termList"
+          v-loading="loading"
+          class="custom-table"
+          height="700px"
+      >
         <el-table-column width="180">
           <template #header>
             <span class="yi-bilingual">
-              <span>汉文术语</span>
+              <span>汉语词汇</span>
               <span class="yi-placeholder">[彝文占位符]</span>
             </span>
           </template>
@@ -32,30 +37,15 @@
           </template>
         </el-table-column>
         
-        <el-table-column width="200">
+        <el-table-column min-width="280">
           <template #header>
             <span class="yi-bilingual">
-              <span>彝文术语</span>
+              <span>彝语对照</span>
               <span class="yi-placeholder">[彝文占位符]</span>
             </span>
           </template>
           <template #default="scope">
             <span class="nuosu-font term-name-nuosu">{{ scope.row.termNuosu }}</span>
-          </template>
-        </el-table-column>
-        
-        <el-table-column>
-          <template #header>
-            <span class="yi-bilingual">
-              <span>术语解释</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
-            </span>
-          </template>
-          <template #default="scope">
-            <div class="definition-box">
-              <p class="cn-def">{{ scope.row.definitionCn }}</p>
-              <p class="nuosu-font nuosu-def">{{ scope.row.definitionNuosu }}</p>
-            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -90,7 +80,7 @@ onMounted(fetchTerms)
 </script>
 
 <style scoped lang="scss">
-.glossary-container {
+.vocabulary-container {
   padding: 10px;
   color: var(--color-text-primary);
 
@@ -133,13 +123,8 @@ onMounted(fetchTerms)
       border-bottom: 2px solid var(--color-border-default);
     }
 
-    .term-name-cn { color: var(--color-primary); font-weight: 600; }
-    .term-name-nuosu { color: var(--color-secondary); font-size: 1.2rem; }
-
-    .definition-box {
-      .cn-def { color: var(--color-text-primary); margin: 0 0 8px; line-height: 1.6; }
-      .nuosu-def { color: var(--color-text-secondary); font-size: 1.15rem; line-height: 1.8; margin: 0; }
-    }
+    .term-name-cn { color: var(--color-primary); font-weight: 600; white-space: nowrap; }
+    .term-name-nuosu { color: var(--color-secondary); font-size: 1.2rem; font-family: var(--yi-font-family); }
   }
 }
 </style>

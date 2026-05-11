@@ -25,22 +25,26 @@ const router = createRouter({
           component: () => import('../views/ConsultationView.vue')
         },
         {
-          path: 'glossary',
-          name: 'glossary',
-          component: () => import('../views/GlossaryView.vue')
+          path: 'vocabulary',
+          name: 'vocabulary',
+          component: () => import('../views/VocabularyView.vue')
         },
         // ... 其他导入保持不变
         {
-          path: 'glossary',
-          name: 'glossary',
-          component: () => import('../views/GlossaryView.vue')
+          path: 'vocabulary',
+          name: 'vocabulary',
+          component: () => import('../views/VocabularyView.vue')
         },
         {
           path: 'consultation',
           name: 'consultation',
           component: () => import('../views/LawSearchView.vue')
+        },
+        {
+          path: 'font',
+          name: 'font',
+          component: () => import('../views/FontManagementView.vue')
         }
-// ...
         
       ]
     }

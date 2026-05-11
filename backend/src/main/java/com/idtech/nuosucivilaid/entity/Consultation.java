@@ -1,6 +1,8 @@
 package com.idtech.nuosucivilaid.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,4 +43,8 @@ public class Consultation {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
+    @Size(max = 50)
+    @NotNull
+    @Column(name = "nuosu_font", nullable = false, length = 50)
+    private String nuosuFont;
 }

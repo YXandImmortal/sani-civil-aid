@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.time.Instant;
 
 @Data
@@ -35,4 +37,7 @@ public class CivilArticle {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "update_time")
+    private Instant updateTime;
 }

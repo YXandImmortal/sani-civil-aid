@@ -23,6 +23,6 @@ public class LegalTermController {
         if (keyword != null && !keyword.isEmpty()) {
             return Result.success(termRepository.searchTerms(keyword));
         }
-        return Result.success(termRepository.findByIsDeletedFalseOrderByCreateTimeDesc());
+        return Result.success(termRepository.findByIsDeletedFalseOrderByFrequencyDesc());
     }
 }

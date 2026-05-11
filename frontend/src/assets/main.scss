@@ -1,4 +1,21 @@
 /* ========== 1. 核心变量注入 (完全采用你提供的方案) ========== */
+/** ========== 0. 本地彝文字体注册 ========== */
+@font-face {
+  font-family: 'Yi Script';
+  src: url('./font/Yi Script.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Microsoft Yi Baiti';
+  src: url('./font/Microsoft Yi Baiti.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root,
 [data-theme="light"] {
   --color-primary: #c7471c;
@@ -139,6 +156,14 @@ body {
 
 .nuosu-font {
   font-family: "Microsoft Yi Baiti", "Nuosu SIL", serif;
+}
+
+.font-yi-script {
+  font-family: "Yi Script", serif;
+}
+
+.font-microsoft-yi-baiti {
+  font-family: "Microsoft Yi Baiti", serif;
 }
 
 /* 彝文占位符标注样式 */

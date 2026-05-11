@@ -31,11 +31,11 @@
             <el-tag :class="item.status === 1 ? 'status-tag-done' : 'status-tag-pending'">
               <span v-if="item.status === 1" class="yi-bilingual">
                 <span>已回答</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="text-nuosu font-yi-script">冨劼</span>
               </span>
               <span v-else class="yi-bilingual">
-                <span>待回答</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span>未回答</span>
+                <span class="text-nuosu font-yi-script">圐儔冨</span>
               </span>
             </el-tag>
             <span class="time-text">{{ formatDate(item.createTime) }}</span>
@@ -47,7 +47,7 @@
           <div class="avatar q-avatar">Q</div>
           <div class="content-body">
             <p class="text-cn">{{ item.questionCn }}</p>
-            <p class="nuosu-font text-nuosu">{{ item.questionNuosu }}</p>
+            <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.questionNuosu }}</p>
           </div>
         </div>
 
@@ -58,7 +58,7 @@
             <div class="avatar a-avatar">A</div>
             <div class="content-body">
               <p class="text-cn">{{ item.answerCn }}</p>
-              <p class="nuosu-font text-nuosu">{{ item.answerNuosu }}</p>
+              <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.answerNuosu }}</p>
             </div>
           </div>
         </div>
@@ -137,15 +137,24 @@ const fetchHistory = async () => {
   } finally { loading.value = false }
 }
 
+const getNuosuFontClass = (font) => {
+  if (font === 'Yi Script') return 'font-yi-script'
+  if (font === 'Microsoft Yi Baiti') return 'font-microsoft-yi-baiti'
+  return ''
+}
+
 const handleSubmit = async () => {
   if (!form.questionCn && !form.questionNuosu) return ElMessage.warning('请填写内容')
   submitting.value = true
   try {
-    await request.post('/civil/consultation/submit', form)
+    const data = await request.post('/civil/consultation/submit', form, { timeout: 60000 })
+    // request 拦截器已自动解包 Result，data 即为 ConsultationVO，直接插入列表前端即可看到答案
+    if (data) {
+      historyList.value.unshift(data)
+    }
     ElMessage.success('咨询已提交')
     dialogVisible.value = false
     form.questionCn = ''; form.questionNuosu = '';
-    fetchHistory()
   } finally { submitting.value = false }
 }
 
@@ -179,8 +188,8 @@ onMounted(fetchHistory)
       .time-text { color: var(--color-text-tertiary); font-size: 0.85rem; }
     }
 
-    .status-tag-done { background-color: var(--color-success); color: var(--color-text-inverse); border: none; }
-    .status-tag-pending { background-color: var(--color-secondary); color: var(--color-text-inverse); border: none; }
+    .status-tag-done { background-color: var(--color-success); color: var(--color-text-inverse); border: none; height: auto; padding: 6px 12px; line-height: 1.4; }
+    .status-tag-pending { background-color: var(--color-secondary); color: var(--color-text-inverse); border: none; height: auto; padding: 6px 12px; line-height: 1.4; }
 
     .chat-row {
       display: flex; gap: 16px; margin: 12px 0;
