@@ -18,6 +18,9 @@ public class LegalTerm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "frequency")
+    private Integer frequency; // 新增：频次
+
     @Column(name = "term_cn", nullable = false)
     private String termCn;
 
