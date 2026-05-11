@@ -170,7 +170,7 @@ const handleLogout = () => {
       align-items: center;
       gap: 20px;
       .user-info-display { cursor: pointer; color: var(--color-text-primary); font-weight: 500; }
-      .theme-toggle { border-color: var(--color-border-default); color: var(--color-secondary); }
+      .theme-toggle { background-color: var(--color-bg-elevated); border-color: var(--color-border-default); color: var(--color-secondary); }
     }
   }
 

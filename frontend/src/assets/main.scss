@@ -90,9 +90,16 @@
   --color-info-light: #162a33;
 }
 
-/* ========== 2. 强力覆盖 Element Plus 默认色 (消除割裂感) ========== */
-:root {
-  /* 基础品牌色系统 */
+/* ========== 2. 覆盖 Element Plus 默认色 (消除割裂感) ========== */
+/**
+ * Element Plus 推荐方案：
+ * 1. main.js 中导入 element-plus/theme-chalk/dark/css-vars.css
+ * 2. 通过 html.dark 类名切换暗色模式
+ * 3. 在 :root 和 html.dark 中分别覆盖品牌色，确保明暗主题均使用设计系统变量
+ */
+:root,
+html.dark {
+  /* 基础品牌色系统 - 使用 CSS 变量引用，自动随 data-theme 切换值 */
   --el-color-primary: var(--color-primary);
   --el-color-primary-light-3: var(--color-primary-hover);
   --el-color-primary-light-9: var(--color-primary-light);
