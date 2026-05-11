@@ -1,7 +1,9 @@
 package com.idtech.nuosucivilaid.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.idtech.nuosucivilaid.entity.CivilArticle;
 import com.idtech.nuosucivilaid.repository.CivilArticleRepository;
+import com.idtech.nuosucivilaid.vo.AiCivilArticleVO;
 import com.idtech.nuosucivilaid.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +43,11 @@ public class CivilArticleController {
         return Result.success(articleRepository.findByCategoryIdAndIsDeletedFalseOrderByArticleNumAsc(id));
     }
 
-    // 【新增】AI 检索接口
+    /**
+     * AI 检索接口：调用 DeepSeek 大模型，返回汉彝双语解释
+     */
     @GetMapping("/ai-search")
-    public Result<Map<String, String>> aiSearch(@RequestParam String keyword) {
+    public Result<AiCivilArticleVO> aiSearch(@RequestParam String keyword) {
         log.info("正在请求 DeepSeek AI 检索: {}", keyword);
 
         HttpHeaders headers = new HttpHeaders();
@@ -76,10 +80,9 @@ public class CivilArticleController {
             List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
             String content = (String) ((Map<String, Object>) choices.get(0).get("message")).get("content");
 
-            // 这里 content 是 AI 返回的 JSON 字符串，直接传回前端解析
-            return Result.success(new HashMap<String, String>() {{
-                put("aiResult", content);
-            }});
+            // 将 AI 返回的 JSON 字符串解析为类型安全的 AIVO
+            AiCivilArticleVO aiResult = JSONUtil.toBean(content, AiCivilArticleVO.class);
+            return Result.success(aiResult);
         } catch (Exception e) {
             log.error("AI 检索失败", e);
             return Result.error(500, "AI 服务暂时不可用");
