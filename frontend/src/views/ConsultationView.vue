@@ -1,22 +1,42 @@
 <template>
   <div class="consultation-container">
     <div class="page-header">
-      <h2 class="main-title">{{ appStore.lang === 'zh' ? '法律咨询' : 'ꊇꇅꇉꄧ' }}</h2>
+      <h2 class="main-title">
+        <span class="yi-bilingual">
+          <span>法律咨询</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
+      </h2>
       <el-button type="primary" class="ask-btn" @click="dialogVisible = true">
         <el-icon style="margin-right: 5px"><ChatDotRound /></el-icon>
-        {{ appStore.lang === 'zh' ? '我要提问' : 'ꄜꀋꄧꄉ' }}
+        <span class="yi-bilingual">
+          <span>我要提问</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
       </el-button>
     </div>
 
     <!-- 咨询历史列表 -->
     <div class="history-list" v-loading="loading">
-      <el-empty v-if="historyList.length === 0" :description="appStore.lang === 'zh' ? '暂无咨询记录' : 'ꀋꄜꇅꇈꀐ'" />
+      <el-empty v-if="historyList.length === 0">
+        <span class="yi-bilingual">
+          <span>暂无咨询记录</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
+      </el-empty>
       
       <el-card v-for="item in historyList" :key="item.id" class="history-card" shadow="hover">
         <template #header>
           <div class="card-header">
             <el-tag :class="item.status === 1 ? 'status-tag-done' : 'status-tag-pending'">
-              {{ item.status === 1 ? (appStore.lang === 'zh' ? '已回答' : 'ꇅꇈꀐ') : (appStore.lang === 'zh' ? '待回答' : 'ꇬꄜꀐ') }}
+              <span v-if="item.status === 1" class="yi-bilingual">
+                <span>已回答</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+              <span v-else class="yi-bilingual">
+                <span>待回答</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
             </el-tag>
             <span class="time-text">{{ formatDate(item.createTime) }}</span>
           </div>
@@ -48,22 +68,47 @@
     <!-- 提问弹窗 -->
     <el-dialog
       v-model="dialogVisible"
-      :title="appStore.lang === 'zh' ? '提交新咨询' : 'ꊇꇅꇉꄧꄧꄉ'"
       width="550px"
       class="custom-dialog"
     >
+      <template #header>
+        <span class="yi-bilingual">
+          <span>提交新咨询</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
+      </template>
       <el-form :model="form" label-position="top">
-        <el-form-item :label="appStore.lang === 'zh' ? '汉文问题描述' : 'ꇩꉙꊇꇅ'">
+        <el-form-item>
+          <template #label>
+            <span class="yi-bilingual">
+              <span>汉文问题描述</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </template>
           <el-input v-model="form.questionCn" type="textarea" :rows="4" class="custom-input" />
         </el-form-item>
-        <el-form-item :label="appStore.lang === 'zh' ? '彝文问题描述' : 'ꆈꌠꉙꊇꇅ'">
+        <el-form-item>
+          <template #label>
+            <span class="yi-bilingual">
+              <span>彝文问题描述</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </template>
           <el-input v-model="form.questionNuosu" type="textarea" :rows="4" class="custom-input nuosu-font" />
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible = false" class="cancel-btn">{{ appStore.lang === 'zh' ? '取消' : 'ꀋꄜ' }}</el-button>
+        <el-button @click="dialogVisible = false" class="cancel-btn">
+          <span class="yi-bilingual">
+            <span>取消</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-button>
         <el-button type="primary" @click="handleSubmit" :loading="submitting" class="submit-btn">
-          {{ appStore.lang === 'zh' ? '提交咨询' : 'ꄧꄉ' }}
+          <span class="yi-bilingual">
+            <span>提交咨询</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </el-button>
       </template>
     </el-dialog>
@@ -134,14 +179,14 @@ onMounted(fetchHistory)
       .time-text { color: var(--color-text-tertiary); font-size: 0.85rem; }
     }
 
-    .status-tag-done { background-color: var(--color-success); color: white; border: none; }
-    .status-tag-pending { background-color: var(--color-secondary); color: white; border: none; }
+    .status-tag-done { background-color: var(--color-success); color: var(--color-text-inverse); border: none; }
+    .status-tag-pending { background-color: var(--color-secondary); color: var(--color-text-inverse); border: none; }
 
     .chat-row {
       display: flex; gap: 16px; margin: 12px 0;
       .avatar {
         width: 32px; height: 32px; border-radius: 50%; display: flex;
-        align-items: center; justify-content: center; font-weight: bold; color: white; flex-shrink: 0;
+        align-items: center; justify-content: center; font-weight: bold; color: var(--color-text-inverse); flex-shrink: 0;
       }
       .q-avatar { background-color: var(--color-primary); }
       .a-avatar { background-color: var(--color-secondary); }

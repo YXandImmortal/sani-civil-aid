@@ -2,13 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
-  const lang = ref(localStorage.getItem('lang') || 'zh')
   const theme = ref(localStorage.getItem('theme') || 'light')
-
-  const toggleLang = () => {
-    lang.value = lang.value === 'zh' ? 'nuosu' : 'zh'
-    localStorage.setItem('lang', lang.value)
-  }
 
   const toggleTheme = () => {
     theme.value = theme.value === 'light' ? 'dark' : 'light'
@@ -27,5 +21,5 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  return { lang, theme, toggleLang, toggleTheme, applyTheme }
+  return { theme, toggleTheme, applyTheme }
 })

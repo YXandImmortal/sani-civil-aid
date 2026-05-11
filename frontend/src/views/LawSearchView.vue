@@ -3,12 +3,15 @@
     <!-- 1. 核心搜索区 -->
     <div class="search-section">
       <h1 class="nuosu-title main-title-text">
-        {{ appStore.lang === 'zh' ? '民法典查询助手' : 'ꏓꂱꈄꏍꇈꑌꄜꄉ' }}
+        <span class="yi-bilingual">
+          <span>民法典查询</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
       </h1>
       <div class="search-input-wrapper">
         <el-input
           v-model="searchQuery"
-          :placeholder="appStore.lang === 'zh' ? '输入法条编号或关键词...' : 'ꇬꏠꇈꑌ...'"
+          placeholder="输入法条编号或关键词..."
           size="large"
           clearable
           class="main-search-input"
@@ -32,7 +35,7 @@
           >
             <div class="card-content">
               <h3>{{ item.name_cn }}</h3>
-              <p class="nuosu-sub-text">{{ item.name_nuosu }}</p>
+              <p class="nuosu-sub-text yi-placeholder">{{ item.name_nuosu }}</p>
             </div>
           </el-card>
         </el-col>
@@ -43,14 +46,32 @@
     <div v-if="articleList.length > 0" class="result-section">
       <div class="result-header">
         <span class="count-tip">
-          {{ appStore.lang === 'zh' ? '找到' : 'ꇈꑌꄜꄉ' }} 
-          <span class="highlight-num">{{ articleList.length }}</span> 
-          {{ appStore.lang === 'zh' ? '条官方收录结果' : 'ꏠ' }}
+          <span class="yi-bilingual">
+            <span>找到</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+          <span class="highlight-num">{{ articleList.length }}</span>
+          <span class="yi-bilingual">
+            <span>条官方收录结果</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </span>
-        <el-button link class="clear-btn" @click="resetSearch">清空</el-button>
+        <el-button link class="clear-btn" @click="resetSearch">
+          <span class="yi-bilingual">
+            <span>清空</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-button>
       </div>
       <el-card v-for="item in articleList" :key="item.id" class="article-card" @click="showDetail(item)">
-        <template #header><el-tag class="article-tag">第 {{ item.articleNum }} 条</el-tag></template>
+        <template #header>
+          <el-tag class="article-tag">
+            <span class="yi-bilingual">
+              <span>第 {{ item.articleNum }} 条</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </el-tag>
+        </template>
         <div class="content-cn">{{ item.contentCn }}</div>
         <el-divider border-style="dashed" />
         <div class="content-nuosu">{{ item.contentNuosu }}</div>
@@ -60,17 +81,31 @@
     <!-- 4. AI 搜索结果区 (核心新增) -->
     <div v-if="aiArticle" class="ai-section">
       <el-alert
-        title="此法条当前未收录，正在进行AI检索，内容仅供参考"
         type="warning"
         show-icon
         :closable="false"
         class="ai-alert"
-      />
+      >
+        <span class="yi-bilingual">
+          <span>此法条当前未收录，正在进行AI检索，内容仅供参考</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
+      </el-alert>
       <el-card class="article-card ai-card" v-loading="aiLoading">
         <template #header>
           <div class="card-header-flex">
-            <el-tag type="danger" effect="dark">DeepSeek AI 检索结果</el-tag>
-            <span class="ai-tip-text">智能生成</span>
+            <el-tag type="danger" effect="dark">
+              <span class="yi-bilingual">
+                <span>DeepSeek AI 检索结果</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </el-tag>
+            <span class="ai-tip-text">
+              <span class="yi-bilingual">
+                <span>智能生成</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </span>
           </div>
         </template>
         <div class="content-cn">{{ aiArticle.contentCn }}</div>
@@ -80,9 +115,20 @@
     </div>
 
     <!-- 5. 详情对话框 -->
-    <el-dialog v-model="detailVisible" :title="appStore.lang === 'zh' ? '法条详情' : 'ꏓꂱꄜꄉ'" width="60%" class="custom-dialog">
+    <el-dialog v-model="detailVisible" width="60%" class="custom-dialog">
+      <template #header>
+        <span class="yi-bilingual">
+          <span>法条详情</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
+      </template>
       <div v-if="selectedArticle" class="detail-body">
-        <el-tag size="large" class="article-tag-dark">第 {{ selectedArticle.articleNum }} 条</el-tag>
+        <el-tag size="large" class="article-tag-dark">
+          <span class="yi-bilingual">
+            <span>第 {{ selectedArticle.articleNum }} 条</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-tag>
         <p class="dialog-text-cn">{{ selectedArticle.contentCn }}</p>
         <el-divider class="dialog-divider"><el-icon><Reading /></el-icon></el-divider>
         <p class="dialog-text-nuosu">{{ selectedArticle.contentNuosu }}</p>
@@ -110,10 +156,10 @@ const detailVisible = ref(false)
 const selectedArticle = ref(null)
 
 const categories = [
-  { id: 1, name_cn: '总则编', name_nuosu: 'ꏓꂱꈄꏍꑼꂠ' },
-  { id: 2, name_cn: '物权编', name_nuosu: 'ꏇꃅꑼꂠ' },
-  { id: 3, name_cn: '合同编', name_nuosu: 'ꄧꄉꑼꂠ' },
-  { id: 4, name_cn: '婚姻家庭', name_nuosu: 'ꊇꇅꇉꄧ' }
+  { id: 1, name_cn: '总则编', name_nuosu: '[彝文占位符]' },
+  { id: 2, name_cn: '物权编', name_nuosu: '[彝文占位符]' },
+  { id: 3, name_cn: '合同编', name_nuosu: '[彝文占位符]' },
+  { id: 4, name_cn: '婚姻家庭', name_nuosu: '[彝文占位符]' }
 ]
 
 // 核心搜索逻辑：先本地，后AI
@@ -197,7 +243,7 @@ const showDetail = (article) => {
 
   .main-search-input {
     :deep(.el-input__wrapper) { background-color: var(--color-bg-inset); box-shadow: 0 0 0 1px var(--color-border-default) inset; &.is-focus { box-shadow: 0 0 0 1px var(--color-primary) inset !important; } }
-    :deep(.el-input-group__append) { background-color: var(--color-primary); color: white; border-color: var(--color-primary); }
+    :deep(.el-input-group__append) { background-color: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
   }
 
   .recommend-section { margin-bottom: 50px; .cate-card { text-align: center; cursor: pointer; transition: all 0.3s; h3 { color: var(--color-secondary); margin: 0; } .nuosu-sub-text { margin-top: 10px; color: var(--color-text-secondary); font-family: "Microsoft Yi Baiti"; } &.is-active { border-color: var(--color-primary) !important; background-color: var(--color-primary-light); } &:hover { border-color: var(--color-secondary); transform: translateY(-5px); } } }

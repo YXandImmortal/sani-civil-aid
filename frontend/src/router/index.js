@@ -10,6 +10,11 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/RegisterView.vue')
+    },
+    {
       path: '/',
       component: () => import('../layout/MainLayout.vue'),
       redirect: '/home',
@@ -17,7 +22,7 @@ const router = createRouter({
         {
           path: 'home',
           name: 'home',
-          component: () => import('../views/HomeView.vue')
+          component: () => import('../views/ConsultationView.vue')
         },
         {
           path: 'glossary',
@@ -33,7 +38,7 @@ const router = createRouter({
         {
           path: 'consultation',
           name: 'consultation',
-          component: () => import('../views/ConsultationView.vue')
+          component: () => import('../views/LawSearchView.vue')
         }
 // ...
         
@@ -44,7 +49,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   const userStore = useUserStore()
-  const publicPages = ['/login']
+  const publicPages = ['/login', '/register']
   const authRequired = !publicPages.includes(to.path)
 
   if (authRequired && !userStore.token) {

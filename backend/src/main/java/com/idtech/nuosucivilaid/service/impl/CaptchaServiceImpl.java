@@ -17,7 +17,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public CaptchaVO generateCaptcha() {
-        SpecCaptcha captcha = new SpecCaptcha(130, 48, 4);
+        SpecCaptcha captcha = new SpecCaptcha(130, 32, 4);
         captcha.setCharType(SpecCaptcha.TYPE_DEFAULT);
         String code = captcha.text();
         String base64 = captcha.toBase64();

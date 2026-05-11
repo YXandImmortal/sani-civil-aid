@@ -3,21 +3,33 @@
     <!-- 侧边栏：采用彝族崇尚的黑色系 -->
     <el-aside width="240px" class="aside-menu">
       <div class="logo">
-        <div class="logo-icon">ꏓ</div>
-        <span>ꏓꂱꈄꏍ AID</span>
+        <div class="logo-icon">[彝文占位符]</div>
+        <span class="yi-bilingual">
+          <span>典亮诺苏</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </span>
       </div>
       <el-menu :default-active="activeMenu" class="custom-menu" router>
         <el-menu-item index="/home">
-          <el-icon><House /></el-icon>
-          <span>{{ appStore.lang === 'zh' ? '首页' : 'ꀒꇑ' }}</span>
+          <el-icon><ChatDotRound /></el-icon>
+          <span class="yi-bilingual">
+            <span>法律咨询</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </el-menu-item>
         <el-menu-item index="/glossary">
           <el-icon><Reading /></el-icon>
-          <span>{{ appStore.lang === 'zh' ? '法律术语' : 'ꄜꀋꇬꏠ' }}</span>
+          <span class="yi-bilingual">
+            <span>法律术语</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </el-menu-item>
         <el-menu-item index="/consultation">
-          <el-icon><ChatDotRound /></el-icon>
-          <span>{{ appStore.lang === 'zh' ? '法律咨询' : 'ꊇꇅꇉꄧ' }}</span>
+          <el-icon><House /></el-icon>
+          <span class="yi-bilingual">
+            <span>法条查询</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -27,14 +39,25 @@
       <el-header class="custom-header">
         <div class="header-left">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>Civil Aid</el-breadcrumb-item>
-            <el-breadcrumb-item>{{ breadcrumbName }}</el-breadcrumb-item>
+            <el-breadcrumb-item>典亮诺苏</el-breadcrumb-item>
+            <el-breadcrumb-item>
+              <span class="yi-bilingual" v-if="breadcrumbName">
+                <span>{{ breadcrumbName }}</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
         
         <div class="header-right">
           <!-- 主题切换：太阳/月亮 -->
-          <el-tooltip :content="appStore.theme === 'light' ? '暗色模式' : '明亮模式'">
+          <el-tooltip>
+            <template #content>
+              <span class="yi-bilingual">
+                <span>{{ appStore.theme === 'light' ? '暗色模式' : '明亮模式' }}</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </template>
             <el-button 
               circle 
               class="theme-toggle"
@@ -45,11 +68,6 @@
             </el-button>
           </el-tooltip>
 
-          <!-- 语种切换 -->
-          <el-button size="small" class="lang-btn" @click="appStore.toggleLang">
-            {{ appStore.lang === 'zh' ? '切换为彝文' : 'ꆈꌠꉙꇬꄜ' }}
-          </el-button>
-
           <el-dropdown v-if="userStore.userInfo">
             <span class="user-info-display">
               {{ userStore.userInfo.username }}
@@ -57,7 +75,12 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
+                <el-dropdown-item @click="handleLogout">
+                  <span class="yi-bilingual">
+                    <span>退出登录</span>
+                    <span class="yi-placeholder">[彝文占位符]</span>
+                  </span>
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -86,9 +109,9 @@ const route = useRoute()
 const activeMenu = computed(() => route.path)
 const breadcrumbName = computed(() => {
   const titles = {
-    '/home': appStore.lang === 'zh' ? '首页' : 'ꀒꇑ',
-    '/glossary': appStore.lang === 'zh' ? '法律术语' : 'ꄜꀋꇬꏠ',
-    '/consultation': appStore.lang === 'zh' ? '法律咨询' : 'ꊇꇅꇉꄧ'
+    '/home': '法律咨询',
+    '/glossary': '法律术语',
+    '/consultation': '法条查询'
   }
   return titles[route.path] || ''
 })
@@ -104,7 +127,7 @@ const handleLogout = () => {
   height: 100vh;
 
   .aside-menu {
-    background-color: #000000; // 强制彝族黑
+    background-color: var(--color-bg-elevated);
     border-right: 1px solid var(--color-border-default);
     
     .logo {
@@ -113,7 +136,7 @@ const handleLogout = () => {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: #000;
+      background-color: var(--color-bg-elevated);
       color: var(--color-secondary); // 金色
       font-weight: bold;
       .logo-icon { font-size: 1.5rem; margin-bottom: 4px; border: 1px solid var(--color-secondary); padding: 0 8px; }
@@ -124,10 +147,10 @@ const handleLogout = () => {
       background: transparent;
       :deep(.el-menu-item) {
         color: var(--color-silver);
-        &:hover { background-color: #1a1714; color: var(--color-primary); }
+        &:hover { background-color: var(--color-primary-subtle); color: var(--color-primary); }
         &.is-active { 
           color: var(--color-primary); 
-          background-color: #1a1714;
+          background-color: var(--color-primary-subtle);
           &::before { content: ""; position: absolute; left: 0; width: 4px; height: 100%; background: var(--color-primary); }
         }
       }

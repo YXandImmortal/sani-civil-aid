@@ -1,26 +1,52 @@
 <template>
   <div class="login-wrapper">
-    <div class="login-decoration left">ꏓꂱ</div>
-    <div class="login-decoration right">ꈄꏍ</div>
+    <div class="login-decoration left">[彝文占位符]</div>
+    <div class="login-decoration right">[彝文占位符]</div>
     
     <el-card class="login-card">
       <div class="login-title">
-        <h2 class="fire-text">nuosu-civil-aid</h2>
-        <p class="nuosu-sub">ꆈꌠꏓꂱꈄꏍꇈꑌꄜꄉꐥ</p>
+        <h2 class="fire-text">
+          <span class="yi-bilingual">
+            <span>典亮诺苏</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </h2>
+        <p class="nuosu-sub yi-bilingual">
+          <span>用户登录</span>
+          <span class="yi-placeholder">[彝文占位符]</span>
+        </p>
       </div>
 
       <el-form :model="loginForm" label-position="top" @keyup.enter="handleLogin">
-        <el-form-item label="用户名">
+        <el-form-item>
+          <template #label>
+            <span class="yi-bilingual">
+              <span>用户名</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </template>
           <el-input v-model="loginForm.username" placeholder="请输入用户名" />
         </el-form-item>
 
-        <el-form-item label="密码">
+        <el-form-item>
+          <template #label>
+            <span class="yi-bilingual">
+              <span>密码</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </template>
           <el-input v-model="loginForm.password" type="password" show-password placeholder="请输入密码" />
         </el-form-item>
 
-        <el-form-item label="验证码">
+        <el-form-item>
+          <template #label>
+            <span class="yi-bilingual">
+              <span>验证码</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </template>
           <div class="captcha-container">
-            <el-input v-model="loginForm.captcha" placeholder="输入验证码" style="flex: 1" />
+            <el-input v-model="loginForm.captcha" placeholder="输入验证码" class="captcha-input" />
             <div class="captcha-img-box">
               <img 
                 v-if="captchaImg" 
@@ -28,8 +54,13 @@
                 @click="getCaptcha" 
                 class="captcha-img" 
                 title="点击刷新"
-              />
-              <el-button v-else :loading="true" text>加载中</el-button>
+                alt="验证码图片"/>
+              <el-button v-else :loading="true" text>
+                <span class="yi-bilingual">
+                  <span>加载中</span>
+                  <span class="yi-placeholder">[彝文占位符]</span>
+                </span>
+              </el-button>
             </div>
           </div>
         </el-form-item>
@@ -38,10 +69,26 @@
           type="primary" 
           :loading="loading" 
           @click="handleLogin" 
-          style="width: 100%; margin-top: 10px"
+          class="submit-btn"
         >
-          进入系统 / ꇩꄜ
+          <span class="yi-bilingual">
+            <span>进入系统</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
         </el-button>
+
+        <div class="register-link">
+          <span class="yi-bilingual">
+            <span>还没有账号？</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+          <el-link type="primary" @click="router.push('/register')">
+            <span class="yi-bilingual">
+              <span>去注册</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </el-link>
+        </div>
       </el-form>
     </el-card>
   </div>
@@ -126,12 +173,17 @@ onMounted(getCaptcha)
       .nuosu-sub { color: var(--color-secondary); margin-top: 10px; font-weight: 500; }
     }
 
-    .captcha-box {
-      display: flex; gap: 12px;
-      .img-wrapper {
-        width: 130px; height: 40px; border: 1px solid var(--color-border-default);
+    .captcha-container {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 380px;
+      .captcha-input {
+        flex: 1;
+      }
+      .captcha-img-box {
+        width: 130px; height: 32px; border: 1px solid var(--color-border-default);
         cursor: pointer; border-radius: var(--radius-sm); overflow: hidden;
-        img { width: 100%; height: 100%; }
+        flex-shrink: 0;
+        img { width: 100%; height: 100%; display: block; }
       }
     }
 
@@ -141,6 +193,16 @@ onMounted(getCaptcha)
       border: none;
       box-shadow: var(--shadow-glow);
       &:hover { background-color: var(--color-primary-hover); transform: translateY(-1px); }
+    }
+
+    .register-link {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
     }
   }
 }
