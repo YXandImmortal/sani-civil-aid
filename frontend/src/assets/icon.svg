@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <defs>
+        <!-- 主色渐变：赭石橙红 -->
+        <linearGradient id="bookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c7471c"/>
+            <stop offset="60%" stop-color="#a83a14"/>
+            <stop offset="100%" stop-color="#8a2e0e"/>
+        </linearGradient>
+
+        <!-- 金色光芒渐变 -->
+        <linearGradient id="glowGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#e6a817"/>
+            <stop offset="100%" stop-color="#ffd700"/>
+        </linearGradient>
+    </defs>
+
+    <!-- 光芒层：减为 3 条粗短射线，底部加宽 -->
+    <g opacity="1">
+        <path d="M256 60 L282 160 L256 180 L230 160 Z" fill="url(#glowGrad)"/>
+        <path d="M256 60 L282 160 L256 180 L230 160 Z" fill="url(#glowGrad)" transform="rotate(45 256 256)"/>
+        <path d="M256 60 L282 160 L256 180 L230 160 Z" fill="url(#glowGrad)" transform="rotate(-45 256 256)"/>
+        <circle cx="256" cy="130" r="24" fill="url(#glowGrad)"/>
+    </g>
+
+    <!-- 书本主体 -->
+    <g>
+        <!-- 封面底座：加粗轮廓 -->
+        <path d="M90 380 Q90 430 140 430 L256 445 L372 430 Q422 430 422 380 L422 190 Q422 170 390 170 L256 190 L122 170 Q90 170 90 190 Z"
+              fill="url(#bookGrad)"/>
+
+        <!-- 左页：纯白大块，无细描边，靠颜色对比分界 -->
+        <path d="M110 190 Q185 180 256 200 L256 420 Q185 405 110 405 Q100 405 100 395 L100 200 Q100 190 110 190 Z"
+              fill="#ffffff"/>
+
+        <!-- 右页：纯白大块 -->
+        <path d="M402 190 Q327 180 256 200 L256 420 Q327 405 402 405 Q412 405 412 395 L412 200 Q412 190 402 190 Z"
+              fill="#ffffff"/>
+
+        <!-- 书脊：加粗为 16px 矩形块 -->
+        <rect x="248" y="190" width="16" height="230" fill="#d4a574"/>
+
+        <!-- 书页文字线：仅保留 2 条粗横线，16px 高 -->
+        <rect x="140" y="280" width="90" height="16" rx="8" fill="#8a7e72"/>
+        <rect x="140" y="330" width="110" height="16" rx="8" fill="#8a7e72"/>
+        <rect x="290" y="280" width="90" height="16" rx="8" fill="#8a7e72"/>
+        <rect x="290" y="330" width="110" height="16" rx="8" fill="#8a7e72"/>
+    </g>
+
+    <!-- 中央印章：放大至 r=50，粗边框 -->
+    <circle cx="256" cy="310" r="50" fill="url(#glowGrad)"/>
+    <circle cx="256" cy="310" r="40" fill="none" stroke="#ffffff" stroke-width="6" opacity="0.9"/>
+
+    <!-- 简化的"法"字：笔画加粗到 8px，田字格风格 -->
+    <g stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="1">
+        <line x1="256" y1="280" x2="256" y2="340"/>
+        <line x1="231" y1="295" x2="281" y2="295"/>
+        <line x1="231" y1="310" x2="281" y2="310"/>
+        <line x1="231" y1="325" x2="281" y2="325"/>
+    </g>
+</svg>

@@ -17,11 +17,11 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('../layout/MainLayout.vue'),
-      redirect: '/home',
+      redirect: '/consultation',
       children: [
         {
-          path: 'home',
-          name: 'home',
+          path: 'consultation',
+          name: 'consultation',
           component: () => import('../views/ConsultationView.vue')
         },
         {
@@ -30,8 +30,8 @@ const router = createRouter({
           component: () => import('../views/VocabularyView.vue')
         },
         {
-          path: 'consultation',
-          name: 'consultation',
+          path: 'law-search',
+          name: 'law-search',
           component: () => import('../views/LawSearchView.vue')
         },
         {
@@ -56,7 +56,9 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   const userStore = useUserStore()
-  const publicPages = ['/login', '/register']
+  // 完全公开页面：无需登录即可访问
+  const publicPages = ['/login', '/register', '/consultation', '/vocabulary', '/law-search', '/about']
+  // 需要登录的页面
   const authRequired = !publicPages.includes(to.path)
 
   if (authRequired && !userStore.token) {

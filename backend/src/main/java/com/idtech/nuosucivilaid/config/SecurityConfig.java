@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/**", "/system/**", "/captcha/generate", "/captcha/verify").permitAll().anyRequest().authenticated()
+                        auth.requestMatchers("/auth/**", "/system/**", "/captcha/generate", "/captcha/verify", "/civil/article/**", "/civil/term/**", "/civil/consultation/submit").permitAll().anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -54,15 +54,22 @@ public class ConsultationController {
     // 提交新咨询
     @PostMapping("/submit")
     public Result<ConsultationVO> submit(@RequestBody Consultation consultation) {
-        UserInfoVO currentUser = authService.getCurrentUserInfo();
-        consultation.setUserId(currentUser.getId());
+        UserInfoVO currentUser = null;
+        try {
+            currentUser = authService.getCurrentUserInfo();
+            consultation.setUserId(currentUser.getId());
+        } catch (Exception e) {
+            // 匿名用户提交，userId 保持 null
+            consultation.setUserId(null);
+        }
         consultation.setCreateTime(Instant.now());
         consultation.setStatus(0);
         consultation.setIsDeleted(false);
         consultation.setNuosuFont("");
 
         consultationRepository.save(consultation);
-        log.info("用户 {} 提交了新的法律咨询", currentUser.getUsername());
+        String userLabel = currentUser != null ? currentUser.getUsername() : "匿名用户";
+        log.info("用户 {} 提交了新的法律咨询", userLabel);
 
         // 尝试从 FAQ 中搜索答案
         List<BizCivilFaq> faqList = null;
@@ -91,7 +98,7 @@ public class ConsultationController {
             consultation.setStatus(1);
             consultation.setNuosuFont("Yi Script");
             consultationRepository.save(consultation);
-            log.info("用户 {} 的咨询从 FAQ 中获取到答案", currentUser.getUsername());
+            log.info("用户 {} 的咨询从 FAQ 中获取到答案", userLabel);
             return Result.success(toVO(consultation));
         }
 
@@ -104,10 +111,10 @@ public class ConsultationController {
             consultation.setStatus(1);
             consultation.setNuosuFont("Microsoft Yi Baiti");
             consultationRepository.save(consultation);
-            log.info("用户 {} 的咨询通过 AI 获取到答案", currentUser.getUsername());
+            log.info("用户 {} 的咨询通过 AI 获取到答案", userLabel);
             return Result.success(toVO(consultation));
         } else {
-            log.warn("用户 {} 的咨询 AI 未能返回结果", currentUser.getUsername());
+            log.warn("用户 {} 的咨询 AI 未能返回结果", userLabel);
         }
 
         consultationRepository.save(consultation);

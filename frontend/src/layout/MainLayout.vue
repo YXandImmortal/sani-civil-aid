@@ -10,7 +10,7 @@
         </span>
       </div>
       <el-menu :default-active="activeMenu" class="custom-menu" router>
-        <el-menu-item index="/home">
+        <el-menu-item index="/consultation">
           <el-icon><ChatDotRound /></el-icon>
           <span class="yi-bilingual">
             <span>法律咨询</span>
@@ -24,7 +24,7 @@
             <span class="yi-placeholder">[彝文占位符]</span>
           </span>
         </el-menu-item>
-        <el-menu-item index="/consultation">
+        <el-menu-item index="/law-search">
           <el-icon><Search /></el-icon>
           <span class="yi-bilingual">
             <span>法条查询</span>
@@ -94,28 +94,44 @@
             </el-button>
           </el-tooltip>
 
-          <el-dropdown v-if="userStore.userInfo">
-            <span class="user-info-display">
-              {{ userStore.userInfo.username }}
-              <el-icon><ArrowDown /></el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="router.push('/profile')">
-                  <span class="yi-bilingual">
-                    <span>个人中心</span>
-                    <span class="yi-placeholder">[彝文占位符]</span>
-                  </span>
-                </el-dropdown-item>
-                <el-dropdown-item divided @click="handleLogout">
-                  <span class="yi-bilingual">
-                    <span>退出登录</span>
-                    <span class="yi-placeholder">[彝文占位符]</span>
-                  </span>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <template v-if="userStore.userInfo">
+            <el-dropdown>
+              <span class="user-info-display">
+                {{ userStore.userInfo.username }}
+                <el-icon><ArrowDown /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="router.push('/profile')">
+                    <span class="yi-bilingual">
+                      <span>个人中心</span>
+                      <span class="yi-placeholder">[彝文占位符]</span>
+                    </span>
+                  </el-dropdown-item>
+                  <el-dropdown-item divided @click="handleLogout">
+                    <span class="yi-bilingual">
+                      <span>退出登录</span>
+                      <span class="yi-placeholder">[彝文占位符]</span>
+                    </span>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </template>
+          <template v-else>
+            <el-button link @click="router.push('/login')">
+              <span class="yi-bilingual">
+                <span>登录</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </el-button>
+            <el-button type="primary" @click="router.push('/register')">
+              <span class="yi-bilingual">
+                <span>注册</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </el-button>
+          </template>
         </div>
       </el-header>
       
@@ -141,9 +157,9 @@ const route = useRoute()
 const activeMenu = computed(() => route.path)
 const breadcrumbName = computed(() => {
   const titles = {
-    '/home': '法律咨询',
+    '/consultation': '法律咨询',
     '/vocabulary': '词汇对照',
-    '/consultation': '法条查询',
+    '/law-search': '法条查询',
     '/font': '字体管理',
     '/profile': '个人中心',
     '/about': '关于系统'
