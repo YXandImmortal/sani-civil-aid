@@ -18,6 +18,10 @@ public class Result<T> {
 
     private T data;
 
+    public static <T> Result<T> success() {
+        return success(null);
+    }
+
     public static <T> Result<T> success(T data) {
         return Result.<T>builder()
                 .code(ResultCode.SUCCESS.getCode())

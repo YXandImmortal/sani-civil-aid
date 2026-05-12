@@ -1,5 +1,24 @@
 <template>
   <div class="login-wrapper">
+    <img src="/logo.svg" alt="" class="login-bg-logo" />
+    <div class="theme-toggle-wrapper">
+      <el-tooltip>
+        <template #content>
+          <span class="yi-bilingual">
+            <span>{{ appStore.theme === 'light' ? '暗色模式' : '明亮模式' }}</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </template>
+        <el-button
+          circle
+          class="theme-toggle"
+          @click="appStore.toggleTheme"
+        >
+          <el-icon v-if="appStore.theme === 'light'"><Moon /></el-icon>
+          <el-icon v-else><Sunny /></el-icon>
+        </el-button>
+      </el-tooltip>
+    </div>
     <el-card class="login-card">
       <div class="login-title">
         <h2 class="fire-text">
@@ -94,11 +113,14 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useAppStore } from '@/stores/app'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { Sunny, Moon } from '@element-plus/icons-vue'
 import request from '@/utils/request'
 
 const userStore = useUserStore()
+const appStore = useAppStore()
 const router = useRouter()
 const loading = ref(false)
 const captchaImg = ref('')
@@ -145,18 +167,32 @@ onMounted(getCaptcha)
   position: relative;
   overflow: hidden;
 
-  // 彝族纹饰风格背景
-  .login-decoration {
+  // 半透明大号 Logo 背景
+  .theme-toggle-wrapper {
     position: absolute;
-    font-size: 15rem;
-    color: var(--color-primary-subtle);
-    font-family: "Microsoft Yi Baiti";
-    opacity: 0.5;
-    z-index: 0;
-    &.left { left: -50px; bottom: -50px; }
-    &.right { right: -50px; top: -50px; }
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+  }
+  .theme-toggle {
+    background-color: var(--color-bg-elevated);
+    border-color: var(--color-border-default);
+    color: var(--color-secondary);
   }
 
+  .login-bg-logo {
+    position: absolute;
+    width: 1200px;
+    height: 1200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.06;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  
   .login-card {
     width: 420px;
     z-index: 1;

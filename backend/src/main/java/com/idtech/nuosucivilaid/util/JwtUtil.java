@@ -104,4 +104,17 @@ public final class JwtUtil {
         Claims claims = extractAllClaims(token);
         return (Boolean) claims.get("rememberMe", Boolean.class);
     }
+
+    public String refreshToken(String oldToken, String newUsername) {
+        Claims claims = extractAllClaims(oldToken);
+        Long userId = claims.get("userId", Long.class);
+        String roleName = claims.get("roleName", String.class);
+        Boolean rememberMe = claims.get("rememberMe", Boolean.class);
+        return generateToken(newUsername, userId, roleName, Boolean.TRUE.equals(rememberMe));
+    }
+
+    public Date getExpirationDate(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.getExpiration();
+    }
 }

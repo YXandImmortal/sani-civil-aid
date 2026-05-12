@@ -29,12 +29,6 @@ const router = createRouter({
           name: 'vocabulary',
           component: () => import('../views/VocabularyView.vue')
         },
-        // ... 其他导入保持不变
-        {
-          path: 'vocabulary',
-          name: 'vocabulary',
-          component: () => import('../views/VocabularyView.vue')
-        },
         {
           path: 'consultation',
           name: 'consultation',
@@ -44,8 +38,17 @@ const router = createRouter({
           path: 'font',
           name: 'font',
           component: () => import('../views/FontManagementView.vue')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('../views/ProfileView.vue')
+        },
+        {
+          path: 'about',
+          name: 'about',
+          component: () => import('../views/AboutView.vue')
         }
-        
       ]
     }
   ]

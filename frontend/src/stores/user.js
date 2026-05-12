@@ -39,6 +39,28 @@ export const useUserStore = defineStore('user', {
     },
 
     /**
+     * 修改当前用户信息
+     * @param {Object} infoForm {username, mobile}
+     */
+    async updateInfo(infoForm) {
+      const data = await request.put('/auth/info', infoForm)
+      // 更新 token 和用户信息
+      this.token = data.token
+      this.userInfo = data.userInfo
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
+      return data
+    },
+
+    /**
+     * 修改当前用户密码
+     * @param {Object} pwdForm {oldPassword, newPassword, confirmPassword}
+     */
+    async changePassword(pwdForm) {
+      await request.post('/auth/change-password', pwdForm)
+    },
+
+    /**
      * 退出登录
      */
     logout() {

@@ -55,7 +55,7 @@
         
         <!-- 问题 -->
         <div class="chat-row question-row">
-          <div class="avatar q-avatar">Q</div>
+          <div class="avatar q-avatar font-yi-script">嚳</div>
           <div class="content-body">
             <p class="text-cn">{{ item.questionCn }}</p>
             <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.questionNuosu }}</p>
@@ -66,7 +66,7 @@
         <div v-if="item.status === 1" class="answer-area">
           <el-divider class="custom-divider" />
           <div class="chat-row answer-row">
-            <div class="avatar a-avatar">A</div>
+            <div class="avatar a-avatar font-yi-script">叀</div>
             <div class="content-body">
               <p class="text-cn">{{ item.answerCn }}</p>
               <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.answerNuosu }}</p>
@@ -112,12 +112,29 @@
         </el-form-item>
         <el-form-item>
           <template #label>
-            <span class="yi-bilingual">
-              <span>彝文问题描述</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
-            </span>
+            <div class="label-with-action">
+              <span class="yi-bilingual">
+                <span>彝文问题描述</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+              <el-button
+                link
+                type="primary"
+                size="small"
+                class="font-switch-btn"
+                @click="toggleNuosuFont"
+              >
+                <el-icon style="margin-right: 3px"><Switch /></el-icon>
+                <span>{{ form.nuosuFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script' }}</span>
+              </el-button>
+            </div>
           </template>
-          <el-input v-model="form.questionNuosu" type="textarea" :rows="4" class="custom-input nuosu-font" />
+          <el-input
+            v-model="form.questionNuosu"
+            type="textarea"
+            :rows="4"
+            :class="['custom-input', 'nuosu-font', getNuosuFontClass(form.nuosuFont)]"
+          />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -143,14 +160,14 @@ import { ref, onMounted, reactive } from 'vue'
 import { useAppStore } from '@/stores/app'
 import request from '@/utils/request'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { ChatDotRound, Delete, RefreshRight } from '@element-plus/icons-vue'
+import { ChatDotRound, Delete, RefreshRight, Switch } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const loading = ref(false)
 const submitting = ref(false)
 const dialogVisible = ref(false)
 const historyList = ref([])
-const form = reactive({ questionCn: '', questionNuosu: '' })
+const form = reactive({ questionCn: '', questionNuosu: '', nuosuFont: 'Yi Script' })
 const dialogTitle = ref('提交新咨询')
 const isReConsult = ref(false)
 
@@ -166,6 +183,10 @@ const getNuosuFontClass = (font) => {
   if (font === 'Yi Script') return 'font-yi-script'
   if (font === 'Microsoft Yi Baiti') return 'font-microsoft-yi-baiti'
   return ''
+}
+
+const toggleNuosuFont = () => {
+  form.nuosuFont = form.nuosuFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script'
 }
 
 const handleSubmit = async () => {
@@ -188,6 +209,7 @@ const handleSubmit = async () => {
 const openNewConsult = () => {
   form.questionCn = ''
   form.questionNuosu = ''
+  form.nuosuFont = 'Yi Script'
   isReConsult.value = false
   dialogTitle.value = '提交新咨询'
   dialogVisible.value = true
@@ -196,6 +218,7 @@ const openNewConsult = () => {
 const openReConsult = (item) => {
   form.questionCn = item.questionCn || ''
   form.questionNuosu = item.questionNuosu || ''
+  form.nuosuFont = item.nuosuFont || 'Yi Script'
   isReConsult.value = true
   dialogTitle.value = '重新咨询'
   dialogVisible.value = true
@@ -291,7 +314,12 @@ onMounted(fetchHistory)
     background-color: var(--color-bg-elevated);
     .el-dialog__title { color: var(--color-primary); font-weight: bold; }
     
-    .el-form-item__label { color: var(--color-text-secondary); font-weight: 500; }
+    .el-form-item__label {
+      display: flex !important;
+      width: 100% !important;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
     
     .custom-input .el-textarea__inner {
       background-color: var(--color-bg-inset);
@@ -303,5 +331,17 @@ onMounted(fetchHistory)
 
   .cancel-btn { border-color: var(--color-border-default); color: var(--color-text-secondary); }
   .submit-btn { background-color: var(--color-primary); border: none; &:hover { background-color: var(--color-primary-hover); } }
+
+  .label-with-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .font-switch-btn {
+    padding: 2px 6px;
+    font-size: 0.8rem;
+  }
 }
 </style>

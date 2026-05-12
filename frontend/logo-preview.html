@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>典亮诺苏 Logo 预览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .preview-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      padding: 60px;
+      min-height: 50vh;
+    }
+    .preview-item {
+      text-align: center;
+    }
+    .preview-item p {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #8c8075;
+    }
+    .light-bg { background: #fef9f4; }
+    .light-bg .preview-item p { color: #5c534b; }
+    .dark-bg { background: #1a1714; }
+    .dark-bg .preview-item p { color: #b5a99c; }
+    .size-sm { width: 48px; height: 48px; }
+    .size-md { width: 96px; height: 96px; }
+    .size-lg { width: 192px; height: 192px; }
+    .size-xl { width: 320px; height: 320px; }
+    h2 {
+      text-align: center;
+      padding: 30px 0 10px;
+      font-size: 20px;
+    }
+    .light-bg h2 { color: #1c1612; }
+    .dark-bg h2 { color: #ede4da; }
+  </style>
+</head>
+<body>
+  <div class="light-bg">
+    <h2>☀️ 明亮主题预览</h2>
+    <div class="preview-row">
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-sm" alt="logo">
+        <p>48px（侧边栏图标）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-md" alt="logo">
+        <p>96px（导航栏）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-lg" alt="logo">
+        <p>192px（登录页）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-xl" alt="logo">
+        <p>320px（展示场景）</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dark-bg">
+    <h2>🌙 暗色主题预览</h2>
+    <div class="preview-row">
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-sm" alt="logo">
+        <p>48px（侧边栏图标）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-md" alt="logo">
+        <p>96px（导航栏）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-lg" alt="logo">
+        <p>192px（登录页）</p>
+      </div>
+      <div class="preview-item">
+        <img src="public/logo.svg" class="size-xl" alt="logo">
+        <p>320px（展示场景）</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

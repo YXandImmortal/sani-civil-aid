@@ -1,15 +1,19 @@
 package com.idtech.nuosucivilaid.controller;
 
+import com.idtech.nuosucivilaid.dto.ChangePasswordRequest;
 import com.idtech.nuosucivilaid.dto.LoginRequest;
 import com.idtech.nuosucivilaid.dto.RegisterRequest;
+import com.idtech.nuosucivilaid.dto.UpdateUserInfoRequest;
 import com.idtech.nuosucivilaid.enums.ResultCode;
 import com.idtech.nuosucivilaid.service.AuthService;
+import com.idtech.nuosucivilaid.util.JwtUtil;
 import com.idtech.nuosucivilaid.vo.LoginResponse;
 import com.idtech.nuosucivilaid.vo.Result;
 import com.idtech.nuosucivilaid.vo.UserInfoVO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public Result<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
@@ -44,5 +51,39 @@ public class AuthController {
         UserInfoVO userInfo = authService.getCurrentUserInfo();
         log.debug("获取当前用户信息成功，用户名: {}", userInfo.getUsername());
         return Result.success(userInfo);
+    }
+
+    @PutMapping("/info")
+    public Result<LoginResponse> updateCurrentUserInfo(@RequestBody @Valid UpdateUserInfoRequest request,
+                                                       @RequestHeader("Authorization") String authHeader) {
+        log.info("更新当前用户信息请求");
+        String oldUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserInfoVO userInfo = authService.updateCurrentUserInfo(request);
+
+        String token = authHeader.substring(7);
+        long expiresIn = jwtUtil.getExpiration();
+
+        // 如果修改了用户名，刷新 token
+        if (request.getUsername() != null && !request.getUsername().equals(oldUsername)) {
+            token = jwtUtil.refreshToken(token, userInfo.getUsername());
+            boolean rememberMe = Boolean.TRUE.equals(jwtUtil.extractRememberMe(token));
+            expiresIn = rememberMe ? jwtUtil.getRememberMeExpiration() : jwtUtil.getExpiration();
+        }
+
+        log.info("更新当前用户信息成功，用户名: {}", userInfo.getUsername());
+        return Result.success(LoginResponse.builder()
+                .token(token)
+                .tokenType("Bearer")
+                .expiresIn(expiresIn)
+                .userInfo(userInfo)
+                .build());
+    }
+
+    @PostMapping("/change-password")
+    public Result<Void> changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+        log.info("修改密码请求");
+        authService.changePassword(request);
+        log.info("修改密码成功");
+        return Result.success();
     }
 }

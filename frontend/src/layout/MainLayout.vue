@@ -3,7 +3,7 @@
     <!-- 侧边栏：采用彝族崇尚的黑色系 -->
     <el-aside width="240px" class="aside-menu">
       <div class="logo">
-        <div class="logo-icon">[Logo占位符]</div>
+        <img src="/logo.svg" alt="典亮诺苏" class="logo-icon" />
         <span class="yi-bilingual">
           <span>典亮诺苏</span>
           <span class="yi-placeholder">[彝文占位符]</span>
@@ -35,6 +35,20 @@
           <el-icon><Document /></el-icon>
           <span class="yi-bilingual">
             <span>字体管理</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-menu-item>
+        <el-menu-item index="/profile">
+          <el-icon><User /></el-icon>
+          <span class="yi-bilingual">
+            <span>个人中心</span>
+            <span class="yi-placeholder">[彝文占位符]</span>
+          </span>
+        </el-menu-item>
+        <el-menu-item index="/about">
+          <el-icon><InfoFilled /></el-icon>
+          <span class="yi-bilingual">
+            <span>关于系统</span>
             <span class="yi-placeholder">[彝文占位符]</span>
           </span>
         </el-menu-item>
@@ -87,7 +101,13 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="handleLogout">
+                <el-dropdown-item @click="router.push('/profile')">
+                  <span class="yi-bilingual">
+                    <span>个人中心</span>
+                    <span class="yi-placeholder">[彝文占位符]</span>
+                  </span>
+                </el-dropdown-item>
+                <el-dropdown-item divided @click="handleLogout">
                   <span class="yi-bilingual">
                     <span>退出登录</span>
                     <span class="yi-placeholder">[彝文占位符]</span>
@@ -111,7 +131,7 @@ import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAppStore } from '@/stores/app'
 import { useRouter, useRoute } from 'vue-router'
-import {House, Reading, ArrowDown, ChatDotRound, Sunny, Moon, Search, Document} from '@element-plus/icons-vue'
+import {House, Reading, ArrowDown, ChatDotRound, Sunny, Moon, Search, Document, User, InfoFilled} from '@element-plus/icons-vue'
 
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -124,7 +144,9 @@ const breadcrumbName = computed(() => {
     '/home': '法律咨询',
     '/vocabulary': '词汇对照',
     '/consultation': '法条查询',
-    '/font': '字体管理'
+    '/font': '字体管理',
+    '/profile': '个人中心',
+    '/about': '关于系统'
   }
   return titles[route.path] || ''
 })
@@ -152,7 +174,7 @@ const handleLogout = () => {
       background-color: var(--color-bg-elevated);
       color: var(--color-secondary); // 金色
       font-weight: bold;
-      .logo-icon { font-size: 1.5rem; margin-bottom: 4px; border: 1px solid var(--color-secondary); padding: 0 8px; }
+      .logo-icon { width: 36px; height: 36px; margin-bottom: 6px; }
     }
 
     .custom-menu {
