@@ -50,4 +50,12 @@ public class Result<T> {
                 .data(null)
                 .build();
     }
+
+    public static <T> Result<T> error(ResultCode resultCode) {
+        return Result.<T>builder()
+                .code(resultCode.getCode())
+                .message(resultCode.getMessage())
+                .data(null)
+                .build();
+    }
 }

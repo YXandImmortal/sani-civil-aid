@@ -3,6 +3,7 @@ package com.idtech.nuosucivilaid.controller;
 import cn.hutool.json.JSONUtil;
 import com.idtech.nuosucivilaid.entity.CivilArticle;
 import com.idtech.nuosucivilaid.repository.CivilArticleRepository;
+import com.idtech.nuosucivilaid.exception.BusinessException;
 import com.idtech.nuosucivilaid.vo.AiCivilArticleVO;
 import com.idtech.nuosucivilaid.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -85,7 +86,7 @@ public class CivilArticleController {
             return Result.success(aiResult);
         } catch (Exception e) {
             log.error("AI 检索失败", e);
-            return Result.error(500, "AI 服务暂时不可用");
+            throw BusinessException.aiServiceUnavailable();
         }
     }
 }

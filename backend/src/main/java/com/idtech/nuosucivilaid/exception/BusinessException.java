@@ -12,6 +12,11 @@ public class BusinessException extends RuntimeException {
         this.code = resultCode.getCode();
     }
 
+    public BusinessException(ResultCode resultCode, String message) {
+        super(message);
+        this.code = resultCode.getCode();
+    }
+
     public static BusinessException authFailed() {
         return new BusinessException(ResultCode.UNAUTHORIZED);
     }
@@ -66,5 +71,25 @@ public class BusinessException extends RuntimeException {
 
     public static BusinessException changePasswordOriginalWrong() {
         return new BusinessException(ResultCode.CHANGE_PASSWORD_FAILED_ORIGINAL_WRONG);
+    }
+
+    public static BusinessException paramError() {
+        return new BusinessException(ResultCode.PARAM_ERROR);
+    }
+
+    public static BusinessException paramError(String message) {
+        return new BusinessException(ResultCode.PARAM_ERROR, message);
+    }
+
+    public static BusinessException aiServiceUnavailable() {
+        return new BusinessException(ResultCode.AI_SERVICE_UNAVAILABLE);
+    }
+
+    public static BusinessException consultationNotFound() {
+        return new BusinessException(ResultCode.CONSULTATION_NOT_FOUND);
+    }
+
+    public static BusinessException consultationNoPermission() {
+        return new BusinessException(ResultCode.CONSULTATION_NO_PERMISSION);
     }
 }

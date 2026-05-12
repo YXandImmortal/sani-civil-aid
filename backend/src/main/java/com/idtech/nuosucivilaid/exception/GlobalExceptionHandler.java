@@ -1,5 +1,6 @@
 package com.idtech.nuosucivilaid.exception;
 
+import com.idtech.nuosucivilaid.enums.ResultCode;
 import com.idtech.nuosucivilaid.vo.Result;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -28,7 +29,7 @@ public class GlobalExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
         log.warn("参数校验失败: {}", message);
-        return Result.error(400, message);
+        return Result.error(ResultCode.PARAM_ERROR.getCode(), message);
     }
 
     @ExceptionHandler(BindException.class)
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
         log.warn("参数绑定失败: {}", message);
-        return Result.error(400, message);
+        return Result.error(ResultCode.PARAM_ERROR.getCode(), message);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -46,12 +47,12 @@ public class GlobalExceptionHandler {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
         log.warn("参数校验失败: {}", message);
-        return Result.error(400, message);
+        return Result.error(ResultCode.PARAM_ERROR.getCode(), message);
     }
 
     @ExceptionHandler(Exception.class)
     public Result<Void> handleException(Exception e) {
         log.error("系统异常", e);
-        return Result.error(500, "系统繁忙，请稍后重试");
+        return Result.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMessage());
     }
 }

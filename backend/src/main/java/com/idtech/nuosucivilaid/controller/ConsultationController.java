@@ -10,6 +10,7 @@ import com.idtech.nuosucivilaid.entity.BizCivilFaq;
 import com.idtech.nuosucivilaid.entity.Consultation;
 import com.idtech.nuosucivilaid.repository.BizCivilFaqRepository;
 import com.idtech.nuosucivilaid.repository.ConsultationRepository;
+import com.idtech.nuosucivilaid.exception.BusinessException;
 import com.idtech.nuosucivilaid.service.AuthService;
 import com.idtech.nuosucivilaid.vo.AiCivilArticleVO;
 import com.idtech.nuosucivilaid.vo.ConsultationVO;
@@ -176,6 +177,23 @@ public class ConsultationController {
             log.error("AI 检索失败", e);
             return null;
         }
+    }
+
+    // 删除咨询记录（逻辑删除）
+    @DeleteMapping("/delete/{id}")
+    public Result<Void> delete(@PathVariable Long id) {
+        UserInfoVO currentUser = authService.getCurrentUserInfo();
+        Consultation consultation = consultationRepository.findById(id).orElse(null);
+        if (consultation == null || Boolean.TRUE.equals(consultation.getIsDeleted())) {
+            throw BusinessException.consultationNotFound();
+        }
+        if (!consultation.getUserId().equals(currentUser.getId())) {
+            throw BusinessException.consultationNoPermission();
+        }
+        consultation.setIsDeleted(true);
+        consultationRepository.save(consultation);
+        log.info("用户 {} 删除了咨询记录 {}", currentUser.getUsername(), id);
+        return Result.success(null);
     }
 
     // 获取我的咨询历史

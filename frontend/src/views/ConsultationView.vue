@@ -3,11 +3,11 @@
     <div class="page-header">
       <h2 class="main-title">
         <span class="yi-bilingual">
-          <span>法律咨询</span>
+          <span>智能法律咨询</span>
           <span class="yi-placeholder">[彝文占位符]</span>
         </span>
       </h2>
-      <el-button type="primary" class="ask-btn" @click="dialogVisible = true">
+      <el-button type="primary" class="ask-btn" @click="openNewConsult">
         <el-icon style="margin-right: 5px"><ChatDotRound /></el-icon>
         <span class="yi-bilingual">
           <span>我要提问</span>
@@ -38,7 +38,18 @@
                 <span class="text-nuosu font-yi-script">圐儔冨</span>
               </span>
             </el-tag>
-            <span class="time-text">{{ formatDate(item.createTime) }}</span>
+            <div class="header-right">
+              <span class="time-text">{{ formatDate(item.createTime) }}</span>
+              <el-button
+                type="danger"
+                link
+                size="small"
+                class="delete-btn"
+                @click="handleDelete(item.id)"
+              >
+                <el-icon><Delete /></el-icon>
+              </el-button>
+            </div>
           </div>
         </template>
         
@@ -62,6 +73,18 @@
             </div>
           </div>
         </div>
+
+        <!-- 未回答时显示重新咨询按钮 -->
+        <div v-else class="reconsult-area">
+          <el-divider class="custom-divider" />
+          <el-button type="primary" link class="reconsult-btn" @click="openReConsult(item)">
+            <el-icon style="margin-right: 4px"><RefreshRight /></el-icon>
+            <span class="yi-bilingual">
+              <span>重新咨询</span>
+              <span class="yi-placeholder">[彝文占位符]</span>
+            </span>
+          </el-button>
+        </div>
       </el-card>
     </div>
 
@@ -73,7 +96,7 @@
     >
       <template #header>
         <span class="yi-bilingual">
-          <span>提交新咨询</span>
+          <span>{{ dialogTitle }}</span>
           <span class="yi-placeholder">[彝文占位符]</span>
         </span>
       </template>
@@ -119,8 +142,8 @@
 import { ref, onMounted, reactive } from 'vue'
 import { useAppStore } from '@/stores/app'
 import request from '@/utils/request'
-import { ElMessage } from 'element-plus'
-import { ChatDotRound } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ChatDotRound, Delete, RefreshRight } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const loading = ref(false)
@@ -128,6 +151,8 @@ const submitting = ref(false)
 const dialogVisible = ref(false)
 const historyList = ref([])
 const form = reactive({ questionCn: '', questionNuosu: '' })
+const dialogTitle = ref('提交新咨询')
+const isReConsult = ref(false)
 
 const fetchHistory = async () => {
   loading.value = true
@@ -152,13 +177,49 @@ const handleSubmit = async () => {
     if (data) {
       historyList.value.unshift(data)
     }
-    ElMessage.success('咨询已提交')
+    ElMessage.success(isReConsult.value ? '重新咨询已提交' : '咨询已提交')
     dialogVisible.value = false
     form.questionCn = ''; form.questionNuosu = '';
+    isReConsult.value = false
+    dialogTitle.value = '提交新咨询'
   } finally { submitting.value = false }
 }
 
+const openNewConsult = () => {
+  form.questionCn = ''
+  form.questionNuosu = ''
+  isReConsult.value = false
+  dialogTitle.value = '提交新咨询'
+  dialogVisible.value = true
+}
+
+const openReConsult = (item) => {
+  form.questionCn = item.questionCn || ''
+  form.questionNuosu = item.questionNuosu || ''
+  isReConsult.value = true
+  dialogTitle.value = '重新咨询'
+  dialogVisible.value = true
+}
+
 const formatDate = (dateStr) => dateStr ? new Date(dateStr).toLocaleString() : ''
+
+const handleDelete = async (id) => {
+  try {
+    await ElMessageBox.confirm('确定要删除这条咨询记录吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+    await request.delete(`/civil/consultation/delete/${id}`)
+    historyList.value = historyList.value.filter(item => item.id !== id)
+    ElMessage.success('删除成功')
+  } catch (error) {
+    if (error !== 'cancel') {
+      // 错误已由 request 拦截器自动提示
+    }
+  }
+}
+
 onMounted(fetchHistory)
 </script>
 
@@ -185,7 +246,22 @@ onMounted(fetchHistory)
 
     .card-header {
       display: flex; justify-content: space-between; align-items: center;
+      .header-right {
+        display: flex; align-items: center; gap: 8px;
+      }
       .time-text { color: var(--color-text-tertiary); font-size: 0.85rem; }
+      .delete-btn {
+        color: var(--color-danger);
+        &:hover { color: var(--color-danger-hover); }
+      }
+    }
+
+    .reconsult-area {
+      display: flex; justify-content: center; margin-top: 12px;
+      .reconsult-btn {
+        color: var(--color-primary);
+        &:hover { color: var(--color-primary-hover); }
+      }
     }
 
     .status-tag-done { background-color: var(--color-success); color: var(--color-text-inverse); border: none; height: auto; padding: 6px 12px; line-height: 1.4; }

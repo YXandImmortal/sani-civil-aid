@@ -3,7 +3,7 @@
     <!-- 侧边栏：采用彝族崇尚的黑色系 -->
     <el-aside width="240px" class="aside-menu">
       <div class="logo">
-        <div class="logo-icon">[彝文占位符]</div>
+        <div class="logo-icon">[Logo占位符]</div>
         <span class="yi-bilingual">
           <span>典亮诺苏</span>
           <span class="yi-placeholder">[彝文占位符]</span>
@@ -46,7 +46,12 @@
       <el-header class="custom-header">
         <div class="header-left">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>典亮诺苏</el-breadcrumb-item>
+            <el-breadcrumb-item>
+              <span class="yi-bilingual">
+                <span>典亮诺苏</span>
+                <span class="yi-placeholder">[彝文占位符]</span>
+              </span>
+            </el-breadcrumb-item>
             <el-breadcrumb-item>
               <span class="yi-bilingual" v-if="breadcrumbName">
                 <span>{{ breadcrumbName }}</span>

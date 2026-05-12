@@ -45,7 +45,26 @@ public enum ResultCode {
      * <p>修改密码模块使用</p>
      */
     CHANGE_PASSWORD_FAILED_NOT_MATCH(400, "两次密码不一致"),
-    CHANGE_PASSWORD_FAILED_ORIGINAL_WRONG(400, "原密码错误");
+    CHANGE_PASSWORD_FAILED_ORIGINAL_WRONG(400, "原密码错误"),
+
+    /**
+     * 参数校验状态码
+     * <p>通用参数校验失败使用</p>
+     */
+    PARAM_ERROR(400, "参数错误"),
+
+    /**
+     * AI 服务状态码
+     * <p>AI 调用失败时使用</p>
+     */
+    AI_SERVICE_UNAVAILABLE(500, "AI 服务暂时不可用"),
+
+    /**
+     * 咨询记录状态码
+     * <p>法律咨询模块使用</p>
+     */
+    CONSULTATION_NOT_FOUND(404, "咨询记录不存在"),
+    CONSULTATION_NO_PERMISSION(403, "无权操作该咨询记录");
 
     private final Integer code;
     private final String message;
