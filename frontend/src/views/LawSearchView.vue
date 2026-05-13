@@ -2,7 +2,7 @@
   <div class="home-container">
     <!-- 1. 核心搜索区 -->
     <div class="search-section">
-      <h1 class="nuosu-title main-title-text">
+      <h1 class="sani-title main-title-text">
         <span class="yi-bilingual">
           <span>民法典查询</span>
           <span class="yi-placeholder">伱亞倫仴匢</span>
@@ -35,7 +35,7 @@
           >
             <div class="card-content">
               <h3>{{ item.name_cn }}</h3>
-              <p class="nuosu-sub-text yi-placeholder">{{ item.name_nuosu }}</p>
+              <p class="sani-sub-text yi-placeholder">{{ item.name_sani }}</p>
             </div>
           </el-card>
         </el-col>
@@ -74,7 +74,7 @@
         </template>
         <div class="content-cn">{{ item.contentCn }}</div>
         <el-divider border-style="dashed" />
-        <div class="content-nuosu">{{ item.contentNuosu }}</div>
+        <div class="content-sani">{{ item.contentSani }}</div>
       </el-card>
     </div>
 
@@ -110,7 +110,7 @@
         </template>
         <div class="content-cn">{{ aiArticle.contentCn }}</div>
         <el-divider border-style="dashed" />
-        <div class="content-nuosu">{{ aiArticle.contentNuosu }}</div>
+        <div class="content-sani">{{ aiArticle.contentSani }}</div>
       </el-card>
     </div>
 
@@ -131,7 +131,7 @@
         </el-tag>
         <p class="dialog-text-cn">{{ selectedArticle.contentCn }}</p>
         <el-divider class="dialog-divider"><el-icon><Reading /></el-icon></el-divider>
-        <p class="dialog-text-nuosu">{{ selectedArticle.contentNuosu }}</p>
+        <p class="dialog-text-sani">{{ selectedArticle.contentSani }}</p>
       </div>
     </el-dialog>
   </div>
@@ -156,10 +156,10 @@ const detailVisible = ref(false)
 const selectedArticle = ref(null)
 
 const categories = [
-  { id: 1, name_cn: '总则编', name_nuosu: '冭偯坸' },
-  { id: 2, name_cn: '物权编', name_nuosu: '僌劰坸' },
-  { id: 3, name_cn: '合同编', name_nuosu: '哛儜坸' },
-  { id: 4, name_cn: '婚姻家庭', name_nuosu: '嘕亸厛偔' }
+  { id: 1, name_cn: '总则编', name_sani: '冭偯坸' },
+  { id: 2, name_cn: '物权编', name_sani: '僌劰坸' },
+  { id: 3, name_cn: '合同编', name_sani: '哛儜坸' },
+  { id: 4, name_cn: '婚姻家庭', name_sani: '嘕亸厛偔' }
 ]
 
 // 核心搜索逻辑：先本地，后AI
@@ -190,7 +190,7 @@ const handleSearch = async () => {
 
 const callAiSearch = async () => {
   aiLoading.value = true
-  aiArticle.value = { contentCn: '正在分析法律条文...', contentNuosu: '...' }
+  aiArticle.value = { contentCn: '正在分析法律条文...', contentSani: '...' }
   
   try {
     const data = await request.get('/civil/article/ai-search', { params: { keyword: searchQuery.value } })
@@ -237,14 +237,14 @@ const showDetail = (article) => {
   max-width: 1000px;
   margin: 30px auto;
   
-  .search-section { text-align: center; margin-bottom: 50px; .nuosu-title { font-size: 2.5rem; margin-bottom: 30px; } }
+  .search-section { text-align: center; margin-bottom: 50px; .sani-title { font-size: 2.5rem; margin-bottom: 30px; } }
 
   .main-search-input {
     :deep(.el-input__wrapper) { background-color: var(--color-bg-inset); box-shadow: 0 0 0 1px var(--color-border-default) inset; &.is-focus { box-shadow: 0 0 0 1px var(--color-primary) inset !important; } }
     :deep(.el-input-group__append) { background-color: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
   }
 
-  .recommend-section { margin-bottom: 50px; .cate-card { text-align: center; cursor: pointer; transition: all 0.3s; h3 { color: var(--color-secondary); margin: 0; } .nuosu-sub-text { margin-top: 10px; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; } &.is-active { border-color: var(--color-primary) !important; background-color: var(--color-primary-light); } &:hover { border-color: var(--color-secondary); transform: translateY(-5px); } } }
+  .recommend-section { margin-bottom: 50px; .cate-card { text-align: center; cursor: pointer; transition: all 0.3s; h3 { color: var(--color-secondary); margin: 0; } .sani-sub-text { margin-top: 10px; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; } &.is-active { border-color: var(--color-primary) !important; background-color: var(--color-primary-light); } &:hover { border-color: var(--color-secondary); transform: translateY(-5px); } } }
 
   .result-section, .ai-section {
     .result-header { margin-bottom: 15px; display: flex; justify-content: space-between; .highlight-num { color: var(--color-primary); font-weight: bold; } .clear-btn { color: var(--color-silver-dark); } }
@@ -256,15 +256,15 @@ const showDetail = (article) => {
     &:hover { border-color: var(--color-primary); }
     .article-tag { background-color: var(--color-secondary-light); color: var(--color-secondary-hover); border-color: var(--color-secondary); }
     .content-cn { font-size: 1.05rem; line-height: 1.6; color: var(--color-text-primary); }
-    .content-nuosu { font-size: 1.2rem; line-height: 1.8; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
+    .content-sani { font-size: 1.2rem; line-height: 1.8; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
   }
 
-  .ai-card { border: 2px solid var(--color-primary); .card-header-flex { display: flex; justify-content: space-between; align-items: center; .ai-tip-text { font-size: 0.8rem; color: var(--color-text-tertiary); } } .content-nuosu { font-family: "Microsoft Yi Baiti", serif; } }
+  .ai-card { border: 2px solid var(--color-primary); .card-header-flex { display: flex; justify-content: space-between; align-items: center; .ai-tip-text { font-size: 0.8rem; color: var(--color-text-tertiary); } } .content-sani { font-family: "Microsoft Yi Baiti", serif; } }
 
   :deep(.custom-dialog) {
     background-color: var(--color-bg-elevated); .el-dialog__title { color: var(--color-primary); font-weight: bold; }
     .dialog-text-cn { font-size: 1.1rem; line-height: 1.8; color: var(--color-text-primary); }
-    .dialog-text-nuosu { font-size: 1.4rem; line-height: 2; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
+    .dialog-text-sani { font-size: 1.4rem; line-height: 2; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
     .article-tag-dark { background-color: var(--color-primary); border: none; margin-bottom: 20px; }
   }
 }

@@ -8,9 +8,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/nuosu-civil-aid.log</file>
+        <file>logs/sani-civil-aid.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/nuosu-civil-aid.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/sani-civil-aid.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志保留7天 -->
             <maxHistory>7</maxHistory>
         </rollingPolicy>
@@ -27,7 +27,7 @@
     </root>
 
     <!-- 自定义包的日志级别（比如业务层DEBUG，框架INFO） -->
-    <logger name="com.idtech.nuosucivilaid" level="DEBUG" additivity="false">
+    <logger name="com.idtech.sanicivilaid" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>

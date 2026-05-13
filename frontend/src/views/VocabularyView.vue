@@ -45,7 +45,7 @@
             </span>
           </template>
           <template #default="scope">
-            <span class="nuosu-font term-name-nuosu">{{ scope.row.termNuosu }}</span>
+            <span class="sani-font term-name-sani">{{ scope.row.termSani }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -123,7 +123,7 @@ onMounted(fetchTerms)
     }
 
     .term-name-cn { color: var(--color-primary); font-weight: 600; white-space: nowrap; }
-    .term-name-nuosu { color: var(--color-secondary); font-size: 1.2rem; font-family: var(--yi-font-family); }
+    .term-name-sani { color: var(--color-secondary); font-size: 1.2rem; font-family: var(--yi-font-family); }
   }
 }
 </style>

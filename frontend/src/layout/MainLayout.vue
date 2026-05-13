@@ -69,7 +69,7 @@
             <el-breadcrumb-item>
               <span class="yi-bilingual" v-if="breadcrumbName">
                 <span>{{ breadcrumbName }}</span>
-                <span class="yi-placeholder">{{ breadcrumbNuosu }}</span>
+                <span class="yi-placeholder">{{ breadcrumbSani }}</span>
               </span>
             </el-breadcrumb-item>
           </el-breadcrumb>
@@ -167,7 +167,7 @@ const breadcrumbName = computed(() => {
   return titles[route.path] || ''
 })
 
-const breadcrumbNuosu = computed(() => {
+const breadcrumbSani = computed(() => {
   const map = {
     '法律咨询': '亞伿嚳侼',
     '词汇对照': '啗厡匢僢',

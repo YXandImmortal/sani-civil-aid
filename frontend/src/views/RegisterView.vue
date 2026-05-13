@@ -27,7 +27,7 @@
             <span class="yi-placeholder">凲凴嘍勍</span>
           </span>
         </h2>
-        <p class="nuosu-sub yi-bilingual">
+        <p class="sani-sub yi-bilingual">
           <span>用户注册</span>
           <span class="yi-placeholder">咡堅両吋</span>
         </p>
@@ -292,7 +292,7 @@ onMounted(getCaptcha)
         margin: 0;
         font-size: 1.8rem;
       }
-      .nuosu-sub {
+      .sani-sub {
         color: var(--color-secondary);
         margin-top: 10px;
         font-weight: 500;

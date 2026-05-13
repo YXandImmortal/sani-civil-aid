@@ -27,7 +27,7 @@
             <span class="yi-placeholder">凲凴嘍勍</span>
           </span>
         </h2>
-        <p class="nuosu-sub yi-bilingual">
+        <p class="sani-sub yi-bilingual">
           <span>用户登录</span>
           <span class="yi-placeholder">咡堅刱圽</span>
         </p>
@@ -130,7 +130,6 @@ const getCaptcha = async () => {
   captchaImg.value = ''
   try {
     const data = await request.get('/captcha/generate')
-    console.log('验证码数据获取成功:', data)
     
     // 对应后端字段：imageBase64 和 captchaId
     captchaImg.value = data.imageBase64
@@ -203,7 +202,7 @@ onMounted(getCaptcha)
       text-align: center;
       margin-bottom: 30px;
       .fire-text { color: var(--color-primary); margin: 0; font-size: 1.8rem; }
-      .nuosu-sub { color: var(--color-secondary); margin-top: 10px; font-weight: 500; }
+      .sani-sub { color: var(--color-secondary); margin-top: 10px; font-weight: 500; }
     }
 
     .captcha-container {

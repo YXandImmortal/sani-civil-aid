@@ -3,7 +3,7 @@ spring:
     name: backend
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nuosu_civil_aid_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/sani_civil_aid_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME:normal}
     password: ${DB_PASSWORD:123456}
   jpa:
@@ -19,7 +19,7 @@ server:
   port: 8080
 
 jwt:
-  secret: ${JWT_SECRET:nuosu-civil-aid-default-2026-secret-pass-key}
+  secret: ${JWT_SECRET:sani-civil-aid-default-2026-secret-pass-key}
   expiration: ${JWT_EXPIRATION:86400000}
   remember-me-expiration: ${JWT_REMEMBER_ME_EXPIRATION:2592000000}
 

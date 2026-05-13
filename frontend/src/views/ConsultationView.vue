@@ -45,11 +45,11 @@
             <el-tag :class="item.status === 1 ? 'status-tag-done' : 'status-tag-pending'">
               <span v-if="item.status === 1" class="yi-bilingual">
                 <span>已回答</span>
-                <span class="text-nuosu font-yi-script">冨劼</span>
+                <span class="text-sani font-yi-script">冨劼</span>
               </span>
               <span v-else class="yi-bilingual">
                 <span>未回答</span>
-                <span class="text-nuosu font-yi-script">圐儔冨</span>
+                <span class="text-sani font-yi-script">圐儔冨</span>
               </span>
             </el-tag>
             <div class="header-right">
@@ -72,7 +72,7 @@
           <div class="avatar q-avatar font-yi-script">嚳</div>
           <div class="content-body">
             <p class="text-cn">{{ item.questionCn }}</p>
-            <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.questionNuosu }}</p>
+            <p :class="['text-sani', getSaniFontClass(item.saniFont)]">{{ item.questionSani }}</p>
           </div>
         </div>
 
@@ -83,7 +83,7 @@
             <div class="avatar a-avatar font-yi-script">叀</div>
             <div class="content-body">
               <p class="text-cn">{{ item.answerCn }}</p>
-              <p :class="['text-nuosu', getNuosuFontClass(item.nuosuFont)]">{{ item.answerNuosu }}</p>
+              <p :class="['text-sani', getSaniFontClass(item.saniFont)]">{{ item.answerSani }}</p>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
       <template #header>
         <span class="yi-bilingual">
           <span>{{ dialogTitle }}</span>
-          <span class="yi-placeholder">{{ dialogTitleNuosu }}</span>
+          <span class="yi-placeholder">{{ dialogTitleSani }}</span>
         </span>
       </template>
       <el-form :model="form" label-position="top">
@@ -136,18 +136,18 @@
                 type="primary"
                 size="small"
                 class="font-switch-btn"
-                @click="toggleNuosuFont"
+                @click="toggleSaniFont"
               >
                 <el-icon style="margin-right: 3px"><Switch /></el-icon>
-                <span>{{ form.nuosuFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script' }}</span>
+                <span>{{ form.saniFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script' }}</span>
               </el-button>
             </div>
           </template>
           <el-input
-            v-model="form.questionNuosu"
+            v-model="form.questionSani"
             type="textarea"
             :rows="4"
-            :class="['custom-input', 'nuosu-font', getNuosuFontClass(form.nuosuFont)]"
+            :class="['custom-input', 'sani-font', getSaniFontClass(form.saniFont)]"
           />
         </el-form-item>
       </el-form>
@@ -183,9 +183,9 @@ const loading = ref(false)
 const submitting = ref(false)
 const dialogVisible = ref(false)
 const historyList = ref([])
-const form = reactive({ questionCn: '', questionNuosu: '', nuosuFont: 'Yi Script' })
+const form = reactive({ questionCn: '', questionSani: '', saniFont: 'Yi Script' })
 const dialogTitle = ref('提交新咨询')
-const dialogTitleNuosu = computed(() => isReConsult.value ? '嗢塿嚳侼' : '嚳侼嚔厡剓叇')
+const dialogTitleSani = computed(() => isReConsult.value ? '嗢塿嚳侼' : '嚳侼嚔厡剓叇')
 const isReConsult = ref(false)
 
 const fetchHistory = async () => {
@@ -196,18 +196,18 @@ const fetchHistory = async () => {
   } finally { loading.value = false }
 }
 
-const getNuosuFontClass = (font) => {
+const getSaniFontClass = (font) => {
   if (font === 'Yi Script') return 'font-yi-script'
   if (font === 'Microsoft Yi Baiti') return 'font-microsoft-yi-baiti'
   return ''
 }
 
-const toggleNuosuFont = () => {
-  form.nuosuFont = form.nuosuFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script'
+const toggleSaniFont = () => {
+  form.saniFont = form.saniFont === 'Yi Script' ? 'Microsoft Yi Baiti' : 'Yi Script'
 }
 
 const handleSubmit = async () => {
-  if (!form.questionCn && !form.questionNuosu) return ElMessage.warning('请填写内容')
+  if (!form.questionCn && !form.questionSani) return ElMessage.warning('请填写内容')
   submitting.value = true
   try {
     const data = await request.post('/civil/consultation/submit', form, { timeout: 60000 })
@@ -221,7 +221,7 @@ const handleSubmit = async () => {
       ElMessage.success(isReConsult.value ? '重新咨询已提交' : '咨询已提交')
     }
     dialogVisible.value = false
-    form.questionCn = ''; form.questionNuosu = '';
+    form.questionCn = ''; form.questionSani = '';
     isReConsult.value = false
     dialogTitle.value = '提交新咨询'
   } finally { submitting.value = false }
@@ -229,8 +229,8 @@ const handleSubmit = async () => {
 
 const openNewConsult = () => {
   form.questionCn = ''
-  form.questionNuosu = ''
-  form.nuosuFont = 'Yi Script'
+  form.questionSani = ''
+  form.saniFont = 'Yi Script'
   isReConsult.value = false
   dialogTitle.value = '提交新咨询'
   dialogVisible.value = true
@@ -238,8 +238,8 @@ const openNewConsult = () => {
 
 const openReConsult = (item) => {
   form.questionCn = item.questionCn || ''
-  form.questionNuosu = item.questionNuosu || ''
-  form.nuosuFont = item.nuosuFont || 'Yi Script'
+  form.questionSani = item.questionSani || ''
+  form.saniFont = item.saniFont || 'Yi Script'
   isReConsult.value = true
   dialogTitle.value = '重新咨询'
   dialogVisible.value = true
@@ -323,7 +323,7 @@ onMounted(fetchHistory)
       .content-body {
         flex: 1;
         .text-cn { color: var(--color-text-primary); line-height: 1.6; margin: 0 0 6px; }
-        .text-nuosu { color: var(--color-text-secondary); line-height: 1.8; font-size: 1.2rem; margin: 0; }
+        .text-sani { color: var(--color-text-secondary); line-height: 1.8; font-size: 1.2rem; margin: 0; }
       }
     }
 
