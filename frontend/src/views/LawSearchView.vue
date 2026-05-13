@@ -5,7 +5,7 @@
       <h1 class="nuosu-title main-title-text">
         <span class="yi-bilingual">
           <span>民法典查询</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">伱亞倫仴匢</span>
         </span>
       </h1>
       <div class="search-input-wrapper">
@@ -48,18 +48,18 @@
         <span class="count-tip">
           <span class="yi-bilingual">
             <span>找到</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">儺厫</span>
           </span>
           <span class="highlight-num">{{ articleList.length }}</span>
           <span class="yi-bilingual">
             <span>条官方收录结果</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">倱乻嗠冃圽劼凴</span>
           </span>
         </span>
         <el-button link class="clear-btn" @click="resetSearch">
           <span class="yi-bilingual">
             <span>清空</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">哃凖</span>
           </span>
         </el-button>
       </div>
@@ -68,7 +68,7 @@
           <el-tag class="article-tag">
             <span class="yi-bilingual">
               <span>第 {{ item.articleNum }} 条</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">喕 {{ item.articleNum }} 倱</span>
             </span>
           </el-tag>
         </template>
@@ -88,7 +88,7 @@
       >
         <span class="yi-bilingual">
           <span>此法条当前未收录，正在进行AI检索，内容仅供参考</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">凎亞倱囒冮勦冃儔圽劼，AI僎儺俷儶，佈儶凴匢僢喞圱圐</span>
         </span>
       </el-alert>
       <el-card class="article-card ai-card" v-loading="aiLoading">
@@ -97,13 +97,13 @@
             <el-tag type="danger" effect="dark">
               <span class="yi-bilingual">
                 <span>DeepSeek AI 检索结果</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">DeepSeek AI 僎儺兌凴</span>
               </span>
             </el-tag>
             <span class="ai-tip-text">
               <span class="yi-bilingual">
                 <span>智能生成</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">佱厡喞圇冝</span>
               </span>
             </span>
           </div>
@@ -119,14 +119,14 @@
       <template #header>
         <span class="yi-bilingual">
           <span>法条详情</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">亞倱嚜係</span>
         </span>
       </template>
       <div v-if="selectedArticle" class="detail-body">
         <el-tag size="large" class="article-tag-dark">
           <span class="yi-bilingual">
             <span>第 {{ selectedArticle.articleNum }} 条</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">喕 {{ selectedArticle.articleNum }} 倱</span>
           </span>
         </el-tag>
         <p class="dialog-text-cn">{{ selectedArticle.contentCn }}</p>
@@ -138,11 +138,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { Search, Right, Reading } from '@element-plus/icons-vue'
+import {ref} from 'vue'
+import {useAppStore} from '@/stores/app'
+import {Reading, Search} from '@element-plus/icons-vue'
 import request from '@/utils/request'
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 const appStore = useAppStore()
 const searchQuery = ref('')
@@ -156,10 +156,10 @@ const detailVisible = ref(false)
 const selectedArticle = ref(null)
 
 const categories = [
-  { id: 1, name_cn: '总则编', name_nuosu: '[彝文占位符]' },
-  { id: 2, name_cn: '物权编', name_nuosu: '[彝文占位符]' },
-  { id: 3, name_cn: '合同编', name_nuosu: '[彝文占位符]' },
-  { id: 4, name_cn: '婚姻家庭', name_nuosu: '[彝文占位符]' }
+  { id: 1, name_cn: '总则编', name_nuosu: '冭偯坸' },
+  { id: 2, name_cn: '物权编', name_nuosu: '僌劰坸' },
+  { id: 3, name_cn: '合同编', name_nuosu: '哛儜坸' },
+  { id: 4, name_cn: '婚姻家庭', name_nuosu: '嘕亸厛偔' }
 ]
 
 // 核心搜索逻辑：先本地，后AI
@@ -195,8 +195,7 @@ const callAiSearch = async () => {
   try {
     const data = await request.get('/civil/article/ai-search', { params: { keyword: searchQuery.value } })
     // 解析后端传回的 JSON 字符串
-    const parsed = JSON.parse(data.aiResult)
-    aiArticle.value = parsed
+    aiArticle.value = JSON.parse(data.aiResult)
   } catch (err) {
     aiArticle.value = null
     ElMessage.error('AI 检索超时，请稍后再试')
@@ -211,8 +210,7 @@ const fetchByCategory = async (id) => {
   hasSearched.value = true
   currentCategoryId.value = id
   try {
-    const data = await request.get(`/civil/article/category/${id}`)
-    articleList.value = data
+    articleList.value = await request.get(`/civil/article/category/${id}`)
   } finally { loading.value = false }
 }
 
@@ -246,7 +244,7 @@ const showDetail = (article) => {
     :deep(.el-input-group__append) { background-color: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
   }
 
-  .recommend-section { margin-bottom: 50px; .cate-card { text-align: center; cursor: pointer; transition: all 0.3s; h3 { color: var(--color-secondary); margin: 0; } .nuosu-sub-text { margin-top: 10px; color: var(--color-text-secondary); font-family: "Microsoft Yi Baiti"; } &.is-active { border-color: var(--color-primary) !important; background-color: var(--color-primary-light); } &:hover { border-color: var(--color-secondary); transform: translateY(-5px); } } }
+  .recommend-section { margin-bottom: 50px; .cate-card { text-align: center; cursor: pointer; transition: all 0.3s; h3 { color: var(--color-secondary); margin: 0; } .nuosu-sub-text { margin-top: 10px; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; } &.is-active { border-color: var(--color-primary) !important; background-color: var(--color-primary-light); } &:hover { border-color: var(--color-secondary); transform: translateY(-5px); } } }
 
   .result-section, .ai-section {
     .result-header { margin-bottom: 15px; display: flex; justify-content: space-between; .highlight-num { color: var(--color-primary); font-weight: bold; } .clear-btn { color: var(--color-silver-dark); } }
@@ -258,15 +256,15 @@ const showDetail = (article) => {
     &:hover { border-color: var(--color-primary); }
     .article-tag { background-color: var(--color-secondary-light); color: var(--color-secondary-hover); border-color: var(--color-secondary); }
     .content-cn { font-size: 1.05rem; line-height: 1.6; color: var(--color-text-primary); }
-    .content-nuosu { font-size: 1.2rem; line-height: 1.8; color: var(--color-text-secondary); font-family: "Microsoft Yi Baiti", serif; }
+    .content-nuosu { font-size: 1.2rem; line-height: 1.8; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
   }
 
-  .ai-card { border: 2px solid var(--color-primary); .card-header-flex { display: flex; justify-content: space-between; align-items: center; .ai-tip-text { font-size: 0.8rem; color: var(--color-text-tertiary); } } }
+  .ai-card { border: 2px solid var(--color-primary); .card-header-flex { display: flex; justify-content: space-between; align-items: center; .ai-tip-text { font-size: 0.8rem; color: var(--color-text-tertiary); } } .content-nuosu { font-family: "Microsoft Yi Baiti", serif; } }
 
   :deep(.custom-dialog) {
     background-color: var(--color-bg-elevated); .el-dialog__title { color: var(--color-primary); font-weight: bold; }
     .dialog-text-cn { font-size: 1.1rem; line-height: 1.8; color: var(--color-text-primary); }
-    .dialog-text-nuosu { font-size: 1.4rem; line-height: 2; color: var(--color-text-secondary); font-family: "Microsoft Yi Baiti", serif; }
+    .dialog-text-nuosu { font-size: 1.4rem; line-height: 2; color: var(--color-text-secondary); font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif; }
     .article-tag-dark { background-color: var(--color-primary); border: none; margin-bottom: 20px; }
   }
 }

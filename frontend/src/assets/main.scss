@@ -155,7 +155,7 @@ body {
 }
 
 .nuosu-font {
-  font-family: "Microsoft Yi Baiti", "Nuosu SIL", serif;
+  font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif;
 }
 
 .font-yi-script {
@@ -173,8 +173,9 @@ body {
   line-height: 1.2;
 }
 .yi-placeholder {
+  font-family: "Yi Script", serif;
   font-size: 0.75em;
-  color: var(--color-text-secondary);
+  color: inherit;
 }
 
 /* 消除所有卡片默认的蓝边或默认投影 */

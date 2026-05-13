@@ -4,7 +4,7 @@
       <h2 class="main-title">
         <span class="yi-bilingual">
           <span>民法典常用词汇对照表</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">伱亞倫嚱侙儔勦咡儶啗厡匢僢垎</span>
         </span>
       </h2>
       <el-input
@@ -29,7 +29,7 @@
           <template #header>
             <span class="yi-bilingual">
               <span>汉语词汇</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">噅偦啗厡</span>
             </span>
           </template>
           <template #default="scope">
@@ -41,7 +41,7 @@
           <template #header>
             <span class="yi-bilingual">
               <span>彝语对照</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">凲偦匢僢</span>
             </span>
           </template>
           <template #default="scope">
@@ -54,9 +54,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { Search } from '@element-plus/icons-vue'
+import {onMounted, ref} from 'vue'
+import {useAppStore} from '@/stores/app'
+import {Search} from '@element-plus/icons-vue'
 import request from '@/utils/request'
 
 const appStore = useAppStore()
@@ -67,10 +67,9 @@ const loading = ref(false)
 const fetchTerms = async () => {
   loading.value = true
   try {
-    const data = await request.get('/civil/term/list', {
-      params: { keyword: searchKeyword.value }
+    termList.value = await request.get('/civil/term/list', {
+      params: {keyword: searchKeyword.value}
     })
-    termList.value = data
   } finally {
     loading.value = false
   }

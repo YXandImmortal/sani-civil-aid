@@ -12,19 +12,19 @@ public class SystemInfoServiceImpl implements SystemInfoService {
     @Override
     public SystemInfoResponse getSystemInfo() {
         SystemInfoVO systemInfo = SystemInfoVO.builder()
-                .systemName("典亮诺苏")
-                .fullName("典亮诺苏 · 彝族民事法律援助系统")
-                .version("v0.1.0")
-                .buildDate("20260512")
+                .systemName("典亮撒尼")
+                .fullName("典亮撒尼 · 彝族民事法律援助系统")
+                .version("v0.2.0")
+                .buildDate("20260513")
                 .description("面向彝族地区的智能民事法律援助平台")
                 .introduction("本系统致力于通过人工智能技术，为彝族地区群众提供便捷、专业的民事法律援助服务，助力法治社会建设与民族团结进步。")
-                .releaseDate("2026-05-12")
+                .releaseDate("2026-05-13")
                 .environment("Web 浏览器")
                 .contactEmail("support@example.com")
-                .copyright("© 2026 典亮诺苏开发团队")
+                .copyright("© 2026 典亮撒尼开发团队")
                 .license("本系统及相关文档受知识产权保护，未经授权不得复制、传播或用于商业目的。")
                 .rightsReserved("保留所有权利。")
-                .acknowledgments("感谢所有为彝族地区法律援助事业贡献力量的组织与个人。")
+                .acknowledgments("感谢所有为彝族地区法律援助事业贡献力量的组织与个人。特别感谢「洛笙云 LStudio Cloud」提供的服务器支持与基础设施保障。")
                 .build();
 
         TechStackVO techStack = TechStackVO.builder()
@@ -68,6 +68,11 @@ public class SystemInfoServiceImpl implements SystemInfoService {
                         .name("毕志昇")
                         .role("法律顾问")
                         .description("负责民法典法律知识梳理、咨询逻辑校验及法律条款解读")
+                        .build(),
+                TeamMemberVO.builder()
+                        .name("武子龙")
+                        .role("网络工程师")
+                        .description("负责项目的服务器部署与维护")
                         .build()
         );
 
@@ -87,6 +92,10 @@ public class SystemInfoServiceImpl implements SystemInfoService {
                 RelatedLinkVO.builder()
                         .label("问题反馈")
                         .url("https://github.com/xxx/issues")
+                        .build(),
+                RelatedLinkVO.builder()
+                        .label("洛笙云 LStudio Cloud")
+                        .url("https://www.lstudioc.com")
                         .build()
         );
 

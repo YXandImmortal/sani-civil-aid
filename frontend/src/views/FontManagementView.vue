@@ -5,7 +5,7 @@
       <h2 class="page-title">
         <span class="yi-bilingual">
           <span>字体管理</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">啗乂嚝俷</span>
         </span>
       </h2>
       <p class="page-desc">管理本地 Yi Script 彝文字体的启用状态与显示参数</p>

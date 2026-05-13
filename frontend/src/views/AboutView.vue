@@ -3,11 +3,11 @@
     <!-- 顶部横幅 -->
     <div class="about-hero">
       <div class="hero-logo">
-        <img src="/logo.svg" alt="典亮诺苏" class="hero-logo-img" />
+        <img src="/logo.svg" alt="典亮撒尼" class="hero-logo-img" />
       </div>
       <h1 class="hero-title yi-bilingual">
         <span>{{ systemInfo.systemName }}</span>
-        <span class="yi-placeholder">[彝文占位符]</span>
+        <span class="yi-placeholder">凲凴嘍勍</span>
       </h1>
       <p class="hero-version">
         {{ systemInfo.version }}
@@ -28,7 +28,7 @@
               <el-icon><InfoFilled /></el-icon>
               <span class="yi-bilingual">
                 <span>系统简介</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">偒嘫叏侼</span>
               </span>
             </div>
           </template>
@@ -39,7 +39,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>系统全称</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">偒嘫啔偯墜</span>
                 </span>
               </template>
               {{ systemInfo.fullName }}
@@ -48,7 +48,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>当前版本</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">冮勦噊伅</span>
                 </span>
               </template>
               <el-tag type="primary" effect="plain">{{ systemInfo.version }}</el-tag>
@@ -57,7 +57,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>发布日期</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">亞倎償佢</span>
                 </span>
               </template>
               {{ systemInfo.releaseDate }}
@@ -66,7 +66,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>运行环境</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">咡兌匑咺</span>
                 </span>
               </template>
               {{ systemInfo.environment }}
@@ -75,7 +75,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>联系邮箱</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">剷僎傁刼</span>
                 </span>
               </template>
               <el-link :href="`mailto:${systemInfo.contactEmail}`" type="primary">
@@ -92,7 +92,7 @@
               <el-icon><Cpu /></el-icon>
               <span class="yi-bilingual">
                 <span>技术架构</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">唃壪傛佊</span>
               </span>
             </div>
           </template>
@@ -100,7 +100,7 @@
           <div class="tech-section">
             <h4 class="tech-title yi-bilingual">
               <span>前端技术</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">唦仱唃壪</span>
             </h4>
             <div class="tech-tags">
               <el-tag
@@ -120,7 +120,7 @@
           <div class="tech-section">
             <h4 class="tech-title yi-bilingual">
               <span>后端技术</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">嚳佇唃壪</span>
             </h4>
             <div class="tech-tags">
               <el-tag
@@ -140,7 +140,7 @@
           <div class="tech-section">
             <h4 class="tech-title yi-bilingual">
               <span>基础设施</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">嗴仩咡仠</span>
             </h4>
             <div class="tech-tags">
               <el-tag
@@ -155,6 +155,33 @@
             </div>
           </div>
         </el-card>
+
+        <!-- 相关链接 -->
+        <el-card class="about-card" shadow="never">
+          <template #header>
+            <div class="card-header">
+              <el-icon><Link /></el-icon>
+              <span class="yi-bilingual">
+                <span>相关链接</span>
+                <span class="yi-placeholder">吳凈凓僘</span>
+              </span>
+            </div>
+          </template>
+
+          <div class="link-list">
+            <el-link
+              v-for="link in relatedLinks"
+              :key="link.url"
+              :href="link.url"
+              target="_blank"
+              type="primary"
+              class="link-item"
+            >
+              <el-icon><Document /></el-icon>
+              {{ link.label }}
+            </el-link>
+          </div>
+        </el-card>
       </el-col>
 
       <!-- 右侧：团队与版权 -->
@@ -166,7 +193,7 @@
               <el-icon><UserFilled /></el-icon>
               <span class="yi-bilingual">
                 <span>开发团队</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">兇亣卪唸</span>
               </span>
             </div>
           </template>
@@ -194,7 +221,7 @@
               <el-icon><DocumentChecked /></el-icon>
               <span class="yi-bilingual">
                 <span>版权与协议</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">噊劰俠傛厼啗</span>
               </span>
             </div>
           </template>
@@ -212,36 +239,9 @@
           <div class="acknowledgments">
             <h4 class="ack-title yi-bilingual">
               <span>特别致谢</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">卙圐務倗</span>
             </h4>
             <p class="ack-text">{{ systemInfo.acknowledgments }}</p>
-          </div>
-        </el-card>
-
-        <!-- 快捷链接 -->
-        <el-card class="about-card" shadow="never">
-          <template #header>
-            <div class="card-header">
-              <el-icon><Link /></el-icon>
-              <span class="yi-bilingual">
-                <span>相关链接</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
-              </span>
-            </div>
-          </template>
-
-          <div class="link-list">
-            <el-link
-              v-for="link in relatedLinks"
-              :key="link.url"
-              :href="link.url"
-              target="_blank"
-              type="primary"
-              class="link-item"
-            >
-              <el-icon><Document /></el-icon>
-              {{ link.label }}
-            </el-link>
           </div>
         </el-card>
       </el-col>
@@ -255,7 +255,6 @@ import {
   InfoFilled,
   Cpu,
   UserFilled,
-  User,
   DocumentChecked,
   Link,
   Document
@@ -264,8 +263,8 @@ import { getSystemInfo } from '@/api/system'
 
 // ================= 系统信息 =================
 const systemInfo = ref({
-  systemName: '典亮诺苏',
-  fullName: '典亮诺苏 · 彝族民事法律援助系统',
+  systemName: '典亮撒尼',
+  fullName: '典亮撒尼 · 彝族民事法律援助系统',
   version: 'v1.0.0',
   buildDate: '',
   description: '面向彝族地区的智能民事法律援助平台',
@@ -273,7 +272,7 @@ const systemInfo = ref({
   releaseDate: '2026-05-12',
   environment: 'Web 浏览器',
   contactEmail: '',
-  copyright: '© 2026 典亮诺苏开发团队',
+  copyright: '© 2026 典亮撒尼开发团队',
   license: '本系统及相关文档受知识产权保护，未经授权不得复制、传播或用于商业目的。',
   rightsReserved: '保留所有权利。',
   acknowledgments: '感谢所有为彝族地区法律援助事业贡献力量的组织与个人。'

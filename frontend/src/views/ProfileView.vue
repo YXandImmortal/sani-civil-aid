@@ -9,7 +9,7 @@
               <el-icon><User /></el-icon>
               <span class="yi-bilingual">
                 <span>基本信息</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">嗴嘯侾嚔</span>
               </span>
             </div>
           </template>
@@ -24,7 +24,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>用户名</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">咡堅啔</span>
                 </span>
               </template>
               <el-input v-model="infoForm.username" placeholder="请输入用户名" />
@@ -34,7 +34,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>手机号</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">偼嗴垽</span>
                 </span>
               </template>
               <el-input v-model="infoForm.mobile" placeholder="请输入手机号" />
@@ -44,7 +44,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>角色</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">傪吚</span>
                 </span>
               </template>
               <el-input :model-value="userStore.userInfo?.roleName" disabled />
@@ -58,7 +58,7 @@
             >
               <span class="yi-bilingual">
                 <span>保存修改</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">侘圌俓</span>
               </span>
             </el-button>
           </el-form>
@@ -73,7 +73,7 @@
               <el-icon><Lock /></el-icon>
               <span class="yi-bilingual">
                 <span>修改密码</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">伱匃侘圌</span>
               </span>
             </div>
           </template>
@@ -88,7 +88,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>原密码</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">伱匃冝剠</span>
                 </span>
               </template>
               <el-input
@@ -103,7 +103,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>新密码</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">伱匃嚔厡</span>
                 </span>
               </template>
               <el-input
@@ -118,7 +118,7 @@
               <template #label>
                 <span class="yi-bilingual">
                   <span>确认密码</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">伱匃佮偸</span>
                 </span>
               </template>
               <el-input
@@ -137,7 +137,7 @@
             >
               <span class="yi-bilingual">
                 <span>确认修改</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">侘圌佮偸</span>
               </span>
             </el-button>
           </el-form>

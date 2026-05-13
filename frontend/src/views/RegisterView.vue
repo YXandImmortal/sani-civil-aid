@@ -6,7 +6,7 @@
         <template #content>
           <span class="yi-bilingual">
             <span>{{ appStore.theme === 'light' ? '暗色模式' : '明亮模式' }}</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">{{ appStore.theme === 'light' ? '乊仏埾厹' : '勍倵埾厹' }}</span>
           </span>
         </template>
         <el-button
@@ -23,13 +23,13 @@
       <div class="register-title">
         <h2 class="fire-text">
           <span class="yi-bilingual">
-            <span>典亮诺苏</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span>典亮撒尼</span>
+            <span class="yi-placeholder">凲凴嘍勍</span>
           </span>
         </h2>
         <p class="nuosu-sub yi-bilingual">
           <span>用户注册</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">咡堅両吋</span>
         </p>
       </div>
 
@@ -44,7 +44,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>用户名</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">咡堅啔</span>
             </span>
           </template>
           <el-input v-model="registerForm.username" placeholder="请输入用户名（3-20位）" />
@@ -54,7 +54,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>密码</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">伱匃</span>
             </span>
           </template>
           <el-input
@@ -69,7 +69,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>确认密码</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">伱匃佮偸</span>
             </span>
           </template>
           <el-input
@@ -84,7 +84,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>手机号</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">偼嗴垽</span>
             </span>
           </template>
           <el-input v-model="registerForm.mobile" placeholder="请输入手机号（选填）" />
@@ -94,7 +94,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>验证码</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">偓乿匃</span>
             </span>
           </template>
           <div class="captcha-container">
@@ -115,7 +115,7 @@
               <el-button v-else :loading="true" text>
                 <span class="yi-bilingual">
                   <span>加载中</span>
-                  <span class="yi-placeholder">[彝文占位符]</span>
+                  <span class="yi-placeholder">剓凓儶</span>
                 </span>
               </el-button>
             </div>
@@ -130,19 +130,19 @@
         >
           <span class="yi-bilingual">
             <span>注册</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">両吋</span>
           </span>
         </el-button>
 
         <div class="login-link">
           <span class="yi-bilingual">
             <span>已有账号？</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">偁垽儶冊？</span>
           </span>
           <el-link type="primary" @click="router.push('/login')">
             <span class="yi-bilingual">
               <span>去登录</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">刱圽坖</span>
             </span>
           </el-link>
         </div>

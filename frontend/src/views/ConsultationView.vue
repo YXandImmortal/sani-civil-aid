@@ -4,14 +4,14 @@
       <h2 class="main-title">
         <span class="yi-bilingual">
           <span>智能法律咨询</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">亞伿嚳侼佱厡</span>
         </span>
       </h2>
       <el-button type="primary" class="ask-btn" @click="openNewConsult">
         <el-icon style="margin-right: 5px"><ChatDotRound /></el-icon>
         <span class="yi-bilingual">
           <span>我要提问</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">哋儔侼嚳</span>
         </span>
       </el-button>
     </div>
@@ -27,7 +27,7 @@
         <el-button type="primary" class="login-btn" @click="router.push('/login')">
           <span class="yi-bilingual">
             <span>去登录</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">刱圽坖</span>
           </span>
         </el-button>
       </el-empty>
@@ -35,7 +35,7 @@
       <el-empty v-else-if="historyList.length === 0">
         <span class="yi-bilingual">
           <span>暂无咨询记录</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">嚳侼嗃僘儔儶</span>
         </span>
       </el-empty>
       
@@ -95,7 +95,7 @@
             <el-icon style="margin-right: 4px"><RefreshRight /></el-icon>
             <span class="yi-bilingual">
               <span>重新咨询</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">嗢塿嚳侼</span>
             </span>
           </el-button>
         </div>
@@ -111,7 +111,7 @@
       <template #header>
         <span class="yi-bilingual">
           <span>{{ dialogTitle }}</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">{{ dialogTitleNuosu }}</span>
         </span>
       </template>
       <el-form :model="form" label-position="top">
@@ -119,7 +119,7 @@
           <template #label>
             <span class="yi-bilingual">
               <span>汉文问题描述</span>
-              <span class="yi-placeholder">[彝文占位符]</span>
+              <span class="yi-placeholder">儔侼呅噅啗坸</span>
             </span>
           </template>
           <el-input v-model="form.questionCn" type="textarea" :rows="4" class="custom-input" />
@@ -129,7 +129,7 @@
             <div class="label-with-action">
               <span class="yi-bilingual">
                 <span>彝文问题描述</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">儔侼呅凲啗坸</span>
               </span>
               <el-button
                 link
@@ -155,13 +155,13 @@
         <el-button @click="dialogVisible = false" class="cancel-btn">
           <span class="yi-bilingual">
             <span>取消</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">儔埇圌</span>
           </span>
         </el-button>
         <el-button type="primary" @click="handleSubmit" :loading="submitting" class="submit-btn">
           <span class="yi-bilingual">
             <span>提交咨询</span>
-            <span class="yi-placeholder">[彝文占位符]</span>
+            <span class="yi-placeholder">嚳侼剓叇</span>
           </span>
         </el-button>
       </template>
@@ -170,15 +170,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { useUserStore } from '@/stores/user'
+import {computed, onMounted, reactive, ref} from 'vue'
+import {useUserStore} from '@/stores/user'
 import request from '@/utils/request'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { ChatDotRound, Delete, RefreshRight, Switch } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+import {ElMessage, ElMessageBox} from 'element-plus'
+import {ChatDotRound, Delete, RefreshRight, Switch} from '@element-plus/icons-vue'
+import {useRouter} from 'vue-router'
 
-const appStore = useAppStore()
 const userStore = useUserStore()
 const router = useRouter()
 const loading = ref(false)
@@ -187,14 +185,14 @@ const dialogVisible = ref(false)
 const historyList = ref([])
 const form = reactive({ questionCn: '', questionNuosu: '', nuosuFont: 'Yi Script' })
 const dialogTitle = ref('提交新咨询')
+const dialogTitleNuosu = computed(() => isReConsult.value ? '嗢塿嚳侼' : '嚳侼嚔厡剓叇')
 const isReConsult = ref(false)
 
 const fetchHistory = async () => {
   if (!userStore.token) return
   loading.value = true
   try {
-    const data = await request.get('/civil/consultation/my-list')
-    historyList.value = data
+    historyList.value = await request.get('/civil/consultation/my-list')
   } finally { loading.value = false }
 }
 
