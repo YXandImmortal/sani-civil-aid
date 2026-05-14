@@ -7,6 +7,7 @@
 <p align="center">
   <strong>汉彝双语民事法律援助平台</strong><br>
   让民法典走进彝族村寨，让法律服务跨越语言障碍
+  🌐 官网：<a href="https://sani-civil-aid.lstudio.top" target="_blank">https://sani-civil-aid.lstudio.top</a>
 </p>
 
 <p align="center">
@@ -43,19 +44,19 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  🌙  典亮撒尼 · 凲凴嘍勍                                │
+│  🌙  典亮撒尼 · 彝文注释                                │
 │  ─────────────────────────────────────────────────────  │
 │  ┌────────┐  ┌────────────────────────────────────────┐ │
-│  │💬 法律咨询 │  智能法律咨询 · 亞伿嚳侼佱厡          │ │
+│  │💬 法律咨询 │  智能法律咨询 · 彝文注释              │ │
 │  │📖 词汇对照 │                                      │ │
-│  │🔍 法条查询 │  [我要提问 · 哋儔侼嚳]                │ │
+│  │🔍 法条查询 │  [我要提问 · 彝文注释]                │ │
 │  │🔤 字体管理 │                                      │ │
 │  │👤 个人中心 │  ┌──────────────────────────────────┐│ │
 │  │ℹ️ 关于系统 │  │ 问：借款不还怎么办？             │ │ │
 │  └────────┘      │ 答：根据《民法典》第675条...     │ │ │
-│                  │ 状态：已回答 · 冨劼  2025-05-12  │ │ │
+│                  │ 状态：已回答         2025-05-12  │ │ │
 │                  └──────────────────────────────────┘ │ │
-│                                                      │ │
+│                                                       │ │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -65,7 +66,7 @@
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│    前端前端     │     │     后端后端     │     │     数据数据     │
+│    前端前端     │     │     后端后端     │     │     数据数据    │
 │   Vue 3 + Vite  │◄───►│  Spring Boot 4  │◄───►│     MySQL 8     │
 │  Element Plus   │     │  Spring Security│     │   JPA / JDBC    │
 │   Pinia + Axios │     │   JWT + JJWT    │     │   DDL Scripts   │
@@ -317,8 +318,14 @@ AI 返回内容通过 `contentCn`（汉文）和 `contentSani`（彝文）字段
 
 [MIT](LICENSE) © 典亮撒尼项目组
 
+<p algin="center">
+  <sub>本工作由云南省教育厅科学研究基金项目（编号：2025J1331）资助。</sub>
+  <sub>This work is supported by Yunnan Provincial Education Department Science Foundation of China under Grant 2025J1331.</sub>
+</p>
+
 ---
 
 <p align="center">
   <sub>让法律之光，照亮每一个民族村寨 🏔️</sub>
+  <sub>🌐 官网：<a href="https://sani-civil-aid.lstudio.top" target="_blank">https://sani-civil-aid.lstudio.top</a></sub>
 </p>
