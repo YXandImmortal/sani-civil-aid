@@ -17,6 +17,8 @@ spring:
 
 server:
   port: 8080
+  servlet:
+    context-path: /api
 
 jwt:
   secret: ${JWT_SECRET:sani-civil-aid-default-2026-secret-pass-key}
