@@ -123,7 +123,7 @@ onMounted(fetchTerms)
     }
 
     .term-name-cn { color: var(--color-primary); font-weight: 600; white-space: nowrap; }
-    .term-name-sani { color: var(--color-secondary); font-size: 1.2rem; font-family: var(--yi-font-family); }
+    .term-name-sani { color: var(--color-secondary); font-size: calc(var(--yi-font-size) * 1.2); font-family: var(--yi-font-family); line-height: var(--yi-line-height); }
   }
 }
 </style>

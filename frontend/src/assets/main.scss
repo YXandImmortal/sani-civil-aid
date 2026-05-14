@@ -155,7 +155,9 @@ body {
 }
 
 .sani-font {
-  font-family: "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif;
+  font-family: var(--yi-font-family, "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif);
+  font-size: var(--yi-font-size, 16px);
+  line-height: var(--yi-line-height, 1.6);
 }
 
 .font-yi-script {
@@ -173,7 +175,7 @@ body {
   line-height: 1.2;
 }
 .yi-placeholder {
-  font-family: "Yi Script", serif;
+  font-family: var(--yi-font-family, "Yi Script", "Microsoft Yi Baiti", "Nuosu SIL", serif);
   font-size: 0.75em;
   color: inherit;
 }

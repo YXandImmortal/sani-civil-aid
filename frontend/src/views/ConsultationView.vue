@@ -323,7 +323,7 @@ onMounted(fetchHistory)
       .content-body {
         flex: 1;
         .text-cn { color: var(--color-text-primary); line-height: 1.6; margin: 0 0 6px; }
-        .text-sani { color: var(--color-text-secondary); line-height: 1.8; font-size: 1.2rem; margin: 0; }
+        .text-sani { color: var(--color-text-secondary); line-height: var(--yi-line-height); font-size: calc(var(--yi-font-size) * 1.2); margin: 0; }
       }
     }
 

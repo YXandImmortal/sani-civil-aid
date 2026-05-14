@@ -5,8 +5,10 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useAppStore } from '@/stores/app'
+import { useFontStore } from '@/stores/font'
 
 const appStore = useAppStore()
+const fontStore = useFontStore()
 
 onMounted(() => {
   // 初始化时应用主题

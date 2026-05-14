@@ -224,13 +224,12 @@ const {
     transition: all 0.3s ease;
 
     .preview-main {
-      font-size: 2.5rem;
+      font-size: 2.5em;
       margin-bottom: 12px;
       word-break: break-all;
     }
 
     .preview-paragraph {
-      font-size: 1rem;
       opacity: 0.85;
     }
   }
