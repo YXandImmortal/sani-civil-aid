@@ -14,11 +14,11 @@ public class SystemInfoServiceImpl implements SystemInfoService {
         SystemInfoVO systemInfo = SystemInfoVO.builder()
                 .systemName("典亮撒尼")
                 .fullName("典亮撒尼 · 彝族民事法律援助系统")
-                .version("v0.2.0")
-                .buildDate("20260513")
+                .version("v0.2.3")
+                .buildDate("20260514")
                 .description("面向彝族地区的智能民事法律援助平台")
                 .introduction("本系统致力于通过人工智能技术，为彝族地区群众提供便捷、专业的民事法律援助服务，助力法治社会建设与民族团结进步。")
-                .releaseDate("2026-05-13")
+                .releaseDate("2026-05-14")
                 .environment("Web 浏览器")
                 .contactEmail("support@example.com")
                 .copyright("© 2026 典亮撒尼开发团队")
@@ -91,7 +91,7 @@ public class SystemInfoServiceImpl implements SystemInfoService {
                         .build(),
                 RelatedLinkVO.builder()
                         .label("问题反馈")
-                        .url("https://github.com/xxx/issues")
+                        .url("https://github.com/YXandImmortal/sani-civil-aid/issues")
                         .build(),
                 RelatedLinkVO.builder()
                         .label("洛笙云 LStudio Cloud")
