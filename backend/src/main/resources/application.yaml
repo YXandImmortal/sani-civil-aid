@@ -29,11 +29,11 @@ jwt:
   remember-me-expiration: ${JWT_REMEMBER_ME_EXPIRATION:2592000000}
 
 deepseek:
-    api-key: sk-5f85e6bf6b794efda159511fd7417f4f
+    api-key: ${DEEPSEEK_API_KEY}
     api-url: https://api.deepseek.com/chat/completions
     embedding:
         # 硅基流动注册: https://cloud.siliconflow.cn/  模型: BAAI/bge-m3  维度: 1024
-        api-key: ${SILICONFLOW_API_KEY:sk-wvjsecjommdahpyptjvdbbchxnnokjrhxwunzkujmrepklfa}
+        api-key: ${SILICONFLOW_API_KEY}
         api-url: https://api.siliconflow.cn/v1/embeddings
         model: BAAI/bge-m3
         dimensions: 1024
