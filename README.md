@@ -146,11 +146,8 @@ sani-civil-aid/
 │   └── mvnw / mvnw.cmd         # Maven Wrapper
 │
 ├── database/                   # 数据库脚本
-│   ├── sani_civil_aid_db.sql   # 完整数据库初始化脚本（推荐）
-│   └── nuosu_civil_aid_db.sql  # 历史版本脚本
+│   └── sani_civil_aid_db.sql   # 完整数据库初始化脚本（推荐）
 │
-├── 彝文翻译清单.txt             # 彝文翻译文本记录
-├── 彝文翻译清单.xlsx            # 彝文翻译 Excel 清单
 └── README.md                   # 本文件
 ```
 
