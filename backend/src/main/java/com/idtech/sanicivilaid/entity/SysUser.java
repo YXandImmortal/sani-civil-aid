@@ -51,6 +51,9 @@ public class SysUser {
     @ColumnDefault("0")
     @Column(name = "is_deleted")
     private Boolean isDeleted;
+    @Size(max = 20)
+    @Column(name = "last_read_version", length = 20)
+    private String lastReadVersion;
 
 
 }

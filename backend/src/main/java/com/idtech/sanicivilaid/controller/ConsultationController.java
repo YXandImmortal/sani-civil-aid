@@ -12,6 +12,7 @@ import com.idtech.sanicivilaid.repository.BizCivilFaqRepository;
 import com.idtech.sanicivilaid.repository.ConsultationRepository;
 import com.idtech.sanicivilaid.exception.BusinessException;
 import com.idtech.sanicivilaid.service.AuthService;
+import com.idtech.sanicivilaid.service.FaqVectorIndexService;
 import com.idtech.sanicivilaid.vo.AiCivilArticleVO;
 import com.idtech.sanicivilaid.vo.ConsultationVO;
 import com.idtech.sanicivilaid.vo.Result;
@@ -42,6 +43,9 @@ public class ConsultationController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private FaqVectorIndexService faqVectorIndexService;
 
     @Value("${deepseek.api-key}")
     private String apiKey;
@@ -77,13 +81,15 @@ public class ConsultationController {
         String questionSani = consultation.getQuestionSani();
 
         if (StrUtil.isNotBlank(questionCn)) {
-            // 使用 hutool 进行中文分词后搜索
-            List<String> keywords = segmentChinese(questionCn);
-            for (String keyword : keywords) {
-                faqList = bizCivilFaqRepository.searchByCnKeyword(keyword);
-                if (CollUtil.isNotEmpty(faqList)) {
-                    break;
+            // 使用向量语义检索
+            try {
+                FaqVectorIndexService.FaqSearchResult searchResult = faqVectorIndexService.search(questionCn);
+                if (searchResult != null) {
+                    faqList = List.of(searchResult.getFaq());
+                    log.info("用户 {} 的咨询通过向量检索命中 FAQ，相似度: {}", userLabel, searchResult.getSimilarity());
                 }
+            } catch (Exception e) {
+                log.warn("用户 {} 的向量检索失败，将降级处理: {}", userLabel, e.getMessage());
             }
         } else if (StrUtil.isNotBlank(questionSani)) {
             // 中文提问为空，使用彝文进行模糊搜索
@@ -92,7 +98,7 @@ public class ConsultationController {
 
         if (CollUtil.isNotEmpty(faqList)) {
             // 数据库中搜索到答案
-            BizCivilFaq faq = faqList.get(0);
+            BizCivilFaq faq = faqList.getFirst();
             consultation.setAnswerCn(faq.getAnswerCn());
             consultation.setAnswerSani(faq.getAnswerSani());
             consultation.setStatus(1);
@@ -178,7 +184,7 @@ public class ConsultationController {
         try {
             ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, entity, Map.class);
             List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
-            String content = (String) ((Map<String, Object>) choices.get(0).get("message")).get("content");
+            String content = (String) ((Map<String, Object>) choices.getFirst().get("message")).get("content");
             return JSONUtil.toBean(content, AiCivilArticleVO.class);
         } catch (Exception e) {
             log.error("AI 检索失败", e);

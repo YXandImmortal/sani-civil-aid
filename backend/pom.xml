@@ -106,6 +106,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- hnswlib 内存向量索引 -->
+        <dependency>
+            <groupId>com.github.jelmerk</groupId>
+            <artifactId>hnswlib-core</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
         <!--  Hutool  -->
         <dependency>
             <groupId>cn.hutool</groupId>

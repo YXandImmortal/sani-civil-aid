@@ -7,3 +7,19 @@ import request from '@/utils/request'
 export function getSystemInfo() {
   return request.get('/system/info')
 }
+
+/**
+ * 获取更新公告
+ * @returns {Promise<{ currentVersion, title, content, needShow }>}
+ */
+export function getAnnouncement() {
+  return request.get('/system/announcement')
+}
+
+/**
+ * 标记公告已读
+ * @returns {Promise<null>}
+ */
+export function markAnnouncementRead() {
+  return request.post('/system/announcement/read')
+}

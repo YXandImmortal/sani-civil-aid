@@ -1,5 +1,6 @@
 <template>
   <el-container class="layout-container">
+    <UpdateAnnouncementDialog ref="announcementRef" />
     <!-- 侧边栏：采用彝族崇尚的黑色系 -->
     <el-aside width="240px" class="aside-menu">
       <div class="logo">
@@ -143,16 +144,25 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAppStore } from '@/stores/app'
 import { useRouter, useRoute } from 'vue-router'
 import {Reading, ArrowDown, ChatDotRound, Sunny, Moon, Search, Document, User, InfoFilled} from '@element-plus/icons-vue'
+import UpdateAnnouncementDialog from '@/components/UpdateAnnouncementDialog.vue'
 
 const userStore = useUserStore()
 const appStore = useAppStore()
 const router = useRouter()
 const route = useRoute()
+const announcementRef = ref(null)
+
+onMounted(() => {
+  // 已登录用户检查是否需要展示更新公告
+  if (userStore.token && announcementRef.value) {
+    announcementRef.value.fetchAndShow()
+  }
+})
 
 const activeMenu = computed(() => route.path)
 const breadcrumbName = computed(() => {

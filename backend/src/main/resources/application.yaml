@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/sani_civil_aid_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:yx011215}
+    username: ${DB_USERNAME:normal}
+    password: ${DB_PASSWORD:123456}
   jpa:
     hibernate:
       ddl-auto: none
@@ -20,6 +20,9 @@ server:
   servlet:
     context-path: /api
 
+system:
+  version: v0.3.1
+
 jwt:
   secret: ${JWT_SECRET:sani-civil-aid-default-2026-secret-pass-key}
   expiration: ${JWT_EXPIRATION:86400000}
@@ -28,3 +31,10 @@ jwt:
 deepseek:
     api-key: sk-5f85e6bf6b794efda159511fd7417f4f
     api-url: https://api.deepseek.com/chat/completions
+    embedding:
+        # 硅基流动注册: https://cloud.siliconflow.cn/  模型: BAAI/bge-m3  维度: 1024
+        api-key: ${SILICONFLOW_API_KEY:sk-wvjsecjommdahpyptjvdbbchxnnokjrhxwunzkujmrepklfa}
+        api-url: https://api.siliconflow.cn/v1/embeddings
+        model: BAAI/bge-m3
+        dimensions: 1024
+        similarity-threshold: 0.78
