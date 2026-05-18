@@ -55,5 +55,8 @@ public class BizCivilFaq {
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
+    @Lob
+    @Column(name = "question_embedding")
+    private String questionEmbedding;
 
 }
