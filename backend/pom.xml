@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.idtech</groupId>
     <artifactId>sanicivilaid</artifactId>
-    <version>v0.2.3</version>
+    <version>v0.3.0</version>
     <name>backend</name>
     <description>backend</description>
     <url/>

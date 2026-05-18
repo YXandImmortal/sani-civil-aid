@@ -122,7 +122,7 @@
             <el-button link @click="router.push('/login')">
               <span class="yi-bilingual">
                 <span>登录</span>
-                <span class="yi-placeholder">[彝文占位符]</span>
+                <span class="yi-placeholder">圽坖</span>
               </span>
             </el-button>
             <el-button type="primary" @click="router.push('/register')">

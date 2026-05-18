@@ -18,37 +18,25 @@
       </el-input>
     </div>
 
-    <div class="table-wrapper">
-      <el-table
-          :data="termList"
-          v-loading="loading"
-          class="custom-table"
-          height="700px"
-      >
-        <el-table-column width="180">
-          <template #header>
-            <span class="yi-bilingual">
-              <span>汉语词汇</span>
-              <span class="yi-placeholder">噅偦啗厡</span>
-            </span>
-          </template>
-          <template #default="scope">
-            <span class="term-name-cn">{{ scope.row.termCn }}</span>
-          </template>
-        </el-table-column>
-        
-        <el-table-column min-width="280">
-          <template #header>
-            <span class="yi-bilingual">
-              <span>彝语对照</span>
-              <span class="yi-placeholder">凲偦匢僢</span>
-            </span>
-          </template>
-          <template #default="scope">
-            <span class="sani-font term-name-sani">{{ scope.row.termSani }}</span>
-          </template>
-        </el-table-column>
-      </el-table>
+    <div class="grid-wrapper" v-loading="loading">
+      <el-empty v-if="!loading && termList.length === 0">
+        <span class="yi-bilingual">
+          <span>暂无词汇数据</span>
+          <span class="yi-placeholder">圐儔冨</span>
+        </span>
+      </el-empty>
+
+      <div v-else class="vocab-grid">
+        <div
+          v-for="(item, index) in termList"
+          :key="index"
+          class="vocab-card"
+        >
+          <div class="term-name-cn">{{ item.termCn }}</div>
+          <el-divider border-style="dashed" class="card-divider" />
+          <div class="term-name-sani">{{ item.termSani }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -102,28 +90,84 @@ onMounted(fetchTerms)
     :deep(.el-input__icon) { color: var(--color-secondary); }
   }
 
-  // 表格深度定制
-  .table-wrapper {
+  // 网格容器
+  .grid-wrapper {
     background-color: var(--color-bg-elevated);
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border-default);
-    overflow: hidden;
+    padding: 20px;
+    min-height: 300px;
   }
 
-  :deep(.custom-table) {
-    --el-table-border-color: var(--color-border-subtle);
-    --el-table-header-bg-color: var(--color-bg-inset);
-    --el-table-row-hover-bg-color: var(--color-primary-light);
-    background-color: transparent;
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
 
-    th.el-table__cell {
-      color: var(--color-text-secondary);
-      font-weight: bold;
-      border-bottom: 2px solid var(--color-border-default);
+  .vocab-card {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    cursor: default;
+
+    &:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
     }
 
-    .term-name-cn { color: var(--color-primary); font-weight: 600; white-space: nowrap; }
-    .term-name-sani { color: var(--color-secondary); font-size: calc(var(--yi-font-size) * 1.2); font-family: var(--yi-font-family); line-height: var(--yi-line-height); }
+    .term-name-cn {
+      color: var(--color-primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+
+    .card-divider {
+      margin: 0;
+      width: 40%;
+      :deep(.el-divider__text) { display: none; }
+    }
+
+    .term-name-sani {
+      color: var(--color-secondary);
+      font-size: calc(var(--yi-font-size) * 1.2);
+      font-family: var(--yi-font-family);
+      line-height: var(--yi-line-height);
+      word-break: break-all;
+    }
+  }
+
+  // 响应式：大屏 3 列
+  @media (max-width: 1200px) {
+    .vocab-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  // 响应式：平板 2 列
+  @media (max-width: 768px) {
+    .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+    .custom-search { width: 220px; }
+  }
+
+  // 响应式：移动端 1 列
+  @media (max-width: 480px) {
+    .vocab-grid { grid-template-columns: 1fr; }
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      .custom-search { width: 100%; }
+    }
   }
 }
 </style>

@@ -22,7 +22,7 @@
       <el-empty v-if="!userStore.token" class="empty-not-login">
         <span class="yi-bilingual">
           <span>登录后可查看咨询历史</span>
-          <span class="yi-placeholder">[彝文占位符]</span>
+          <span class="yi-placeholder">刱圽坖</span>
         </span>
         <el-button type="primary" class="login-btn" @click="router.push('/login')">
           <span class="yi-bilingual">
