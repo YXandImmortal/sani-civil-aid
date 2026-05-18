@@ -59,6 +59,8 @@ public class SystemInfoServiceImpl implements SystemInfoService {
                 .copyright("© 2026 典亮撒尼开发团队")
                 .license("本系统及相关文档受知识产权保护，未经授权不得复制、传播或用于商业目的。")
                 .rightsReserved("保留所有权利。")
+                .fundingCN("本工作由云南省教育厅科学研究基金项目（编号：2025J1331）资助。")
+                .fundingEN("This work is supported by Yunnan Provincial Education Department Science Foundation of China under Grant 2025J1331.")
                 .acknowledgments("感谢所有为彝族地区法律援助事业贡献力量的组织与个人。特别感谢「洛笙云 LStudio Cloud」提供的服务器支持与基础设施保障。")
                 .build();
 

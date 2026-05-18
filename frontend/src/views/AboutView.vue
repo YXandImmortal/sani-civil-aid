@@ -232,6 +232,8 @@
             </p>
             <p class="copyright-sub">{{ systemInfo.license }}</p>
             <p v-if="systemInfo.rightsReserved" class="copyright-sub">{{ systemInfo.rightsReserved }}</p>
+            <p v-if="systemInfo.fundingCN" class="copyright-sub">{{ systemInfo.fundingCN }}</p>
+            <p v-if="systemInfo.fundingEN" class="copyright-sub">{{ systemInfo.fundingEN }}</p>
           </div>
 
           <el-divider />
@@ -275,6 +277,8 @@ const systemInfo = ref({
   copyright: '© 2026 典亮撒尼开发团队',
   license: '本系统及相关文档受知识产权保护，未经授权不得复制、传播或用于商业目的。',
   rightsReserved: '保留所有权利。',
+  fundingCN: '本项目由云南省教育厅支持',
+  fundingEN: 'This work is supported by Yunnan Provincial Education Department Science Foundation of China.',
   acknowledgments: '感谢所有为彝族地区法律援助事业贡献力量的组织与个人。'
 })
 

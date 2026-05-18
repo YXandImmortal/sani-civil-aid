@@ -23,5 +23,7 @@ public class SystemInfoVO {
     private String copyright;
     private String license;
     private String rightsReserved;
+    private String fundingCN;
+    private String fundingEN;
     private String acknowledgments;
 }
